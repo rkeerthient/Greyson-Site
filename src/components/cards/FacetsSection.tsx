@@ -21,7 +21,7 @@ const FacetsSection = () => {
       label: "Department",
       showFacet: true,
     },
-    c_cCategory: {
+    c_category: {
       label: "Category",
       collapsible: true,
       defaultExpanded: true,
@@ -92,10 +92,6 @@ const FacetsSection = () => {
               searchOnChange={true}
               defaultExpanded={true}
               facetConfigs={{
-                c_department: {
-                  label: "Department",
-                  showFacet: true,
-                },
                 c_category: {
                   label: "Category",
                   collapsible: true,
@@ -112,7 +108,6 @@ const FacetsSection = () => {
                 },
               }}
             />
-            {/* <StandardFacets excludedFieldIds={["c_color"]} /> */}
           </FilterDisplayManager>
         </div>
       )}

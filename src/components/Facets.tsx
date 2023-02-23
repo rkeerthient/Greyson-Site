@@ -94,21 +94,21 @@ export default function Facets(props: FacetsProps): JSX.Element {
       };
 
       return (
-        // <div key={facet.fieldId}>
-        //   {/* <Facet
-        //     facet={facet}
-        //     {...config}
-        //     customCssclasses={cssClasses}
-        //     onToggle={handleFacetOptionChange}
-        //   />
-        //   {!isLastFacet && config.showFacet && (
-        //     <Divider
-        //       customCssClasses={{ divider: cssClasses.divider }}
-        //       cssCompositionMethod="replace"
-        //     />
-        //   )} */}
-        // </div>
-        <StandardFacets />
+        <div key={facet.fieldId}>
+          <Facet
+            facet={facet}
+            {...config}
+            customCssclasses={cssClasses}
+            onToggle={handleFacetOptionChange}
+          />
+          {!isLastFacet && config.showFacet && (
+            <Divider
+              customCssClasses={{ divider: cssClasses.divider }}
+              cssCompositionMethod="replace"
+            />
+          )}
+        </div>
+        // <StandardFacets />
       );
     });
 
@@ -121,9 +121,6 @@ export default function Facets(props: FacetsProps): JSX.Element {
             Apply
           </button>
         )}
-        {/* <button onClick={handleResetFacets} className={cssClasses.button}>
-          Reset all
-        </button> */}
       </div>
     </div>
   );
