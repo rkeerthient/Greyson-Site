@@ -11,6 +11,7 @@ import Loading from "../components/Loading";
 import {
   LocationBias,
   Pagination,
+  StandardFacets,
   VerticalResults,
 } from "@yext/search-ui-react";
 export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
@@ -35,11 +36,12 @@ export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
         <div className="section-center align-page">
           <FacetContent
             component={
-              <Facets
-                showFacet={true}
-                facetConfigs={facetConfig}
-                searchOnChange={true}
-              />
+              <StandardFacets />
+              // <Facets
+              //   showFacet={true}
+              //   facetConfigs={facetConfig}
+              //   searchOnChange={true}
+              // />
             }
           />
           <MainContent

@@ -3,6 +3,7 @@ import {
   useSearchActions,
   DisplayableFacetOption,
 } from "@yext/search-headless-react";
+import { StandardFacets } from "@yext/search-ui-react";
 import {
   CompositionMethod,
   useComposedCssClasses,
@@ -92,20 +93,21 @@ export default function Facets(props: FacetsProps): JSX.Element {
       };
 
       return (
-        <div key={facet.fieldId}>
-          <Facet
-            facet={facet}
-            {...config}
-            customCssclasses={cssClasses}
-            onToggle={handleFacetOptionChange}
-          />
-          {!isLastFacet && config.showFacet && (
-            <Divider
-              customCssClasses={{ divider: cssClasses.divider }}
-              cssCompositionMethod="replace"
-            />
-          )}
-        </div>
+        // <div key={facet.fieldId}>
+        //   {/* <Facet
+        //     facet={facet}
+        //     {...config}
+        //     customCssclasses={cssClasses}
+        //     onToggle={handleFacetOptionChange}
+        //   />
+        //   {!isLastFacet && config.showFacet && (
+        //     <Divider
+        //       customCssClasses={{ divider: cssClasses.divider }}
+        //       cssCompositionMethod="replace"
+        //     />
+        //   )} */}
+        // </div>
+        <StandardFacets />
       );
     });
 
