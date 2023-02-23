@@ -11,6 +11,7 @@ import {
   VerticalResults,
   LocationBias,
 } from "@yext/search-ui-react";
+import BlogsCard from "../components/cards/BlogsCard";
 // import BlogsCard from "../components/cards/BlogsCard";
 
 export default function BlogsPage({ verticalKey }: { verticalKey: string }) {
@@ -22,15 +23,17 @@ export default function BlogsPage({ verticalKey }: { verticalKey: string }) {
       {/* <PageHero title="Jobs" /> */}
       <WrapperGrid>
         <div className="section-center align-page">
-          {showAllFacets && (
-            <FacetContent
-              component={<Facets showFacet={true} searchOnChange={true} />}
-            />
-          )}
           <MainContent
             result={<ResultCountSection isProducts={false} sortOptions={[]} />}
             className={{ width: "inherit" }}
-            component={<VerticalResults CardComponent={StandardCard} />}
+            component={
+              <VerticalResults
+                customCssClasses={{
+                  verticalResultsContainer: "products-container",
+                }}
+                CardComponent={BlogsCard}
+              />
+            }
           />
         </div>
       </WrapperGrid>

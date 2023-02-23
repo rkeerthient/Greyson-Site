@@ -1,185 +1,112 @@
-import { FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { useProductsContext } from "../../context/ProductsContext";
-import { CardProps } from "../../models/cardComponent";
-
-//prettier-ignore
-export interface ProductCardConfig {
-  showOrdinal?: boolean
-}
-
-//prettier-ignore
-export interface ProductCardProps extends CardProps {
-  configuration: ProductCardConfig 
-}
-export interface Root {
-  rawData: RawData;
-  source: string;
-  index: number;
-  name: string;
-  id: string;
-  highlightedFields: HighlightedFields;
-  entityType: string;
-}
-
-export interface RawData {
-  id: string;
-  type: string;
-  landingPageUrl: string;
-  savedFilters: string[];
-  primaryPhoto: PrimaryPhoto;
-  name: string;
-  c_cCategory: string[];
-  c_color: string[];
-  c_department: string;
-  c_fabric: string[];
-  c_fit: string[];
-  c_price: string[];
-  c_primaryCTA: CPrimaryCta;
-  c_productCategory: string[];
-  c_size: string[];
-  c_sleeveLength: string[];
-  c_subtitle: string[];
-  c_type: string[];
-  uid: string;
-}
-
-export interface PrimaryPhoto {
-  image: Image;
-}
-
-export interface Image {
-  url: string;
-  width: number;
-  height: number;
-  sourceUrl: string;
-  thumbnails: Thumbnail[];
-}
-
-export interface Thumbnail {
-  url: string;
-  width: number;
-  height: number;
-}
-
-export interface CPrimaryCta {
-  label: string;
-  linkType: string;
-  link: string;
-}
-
-export interface HighlightedFields {}
-
-export function BlogsCard(props: any): JSX.Element {
+export default function BlogsCard(props: any) {
   const { result } = props;
-  const { setProdId, setIsModalOpen } = useProductsContext();
   const resData = result.rawData as unknown as any;
-  const { isGrid } = useProductsContext();
-  return isGrid ? (
-    <div>
-      {resData.photoGallery && (
-        <Wrapper>
-          <div>
-            <div className="container">
-              <img src={resData.photoGallery[0].image.url} alt="" />
-              <Link to={`/product/${result.id}`} className="link">
-                <FaEye />
-              </Link>
-            </div>
-            <footer>
-              <h5>{result.name}</h5>
-              <p>${resData.price.value}</p>
-            </footer>
-          </div>
-        </Wrapper>
-      )}
-    </div>
-  ) : (
+
+  return (
     <>
-      {resData.primaryPhoto && (
-        <article>
-          <img src={resData.primaryPhoto.image.url} alt="" />
-          <div>
-            <h4>{result.name}</h4>
-            <h5 className="price">{resData.c_price}</h5>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum
-              inventore illo dolore cupiditate atque iure maxime dolorum nam
-              architecto magni.
-            </p>
-            <button
-              className="btn"
-              onClick={() => {
-                setProdId(result.id);
-                setIsModalOpen(true);
+      {resData && (
+        <article
+          key={resData.id}
+          style={{
+            display: "flex",
+            isolation: "isolate",
+            overflow: "hidden",
+            position: "relative",
+            paddingLeft: "2rem",
+            paddingRight: "2rem",
+            paddingBottom: "2rem",
+            paddingTop: "20rem",
+            backgroundColor: "#111827",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            borderRadius: "1rem",
+          }}
+        >
+          {resData.primaryPhoto && (
+            <img
+              src={resData.primaryPhoto.image.url}
+              alt=""
+              style={{
+                objectFit: "cover",
+                position: "absolute",
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                zIndex: "-1",
+                opacity: 0.5,
+              }}
+            />
+          )}
+          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40" />
+          <div className="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+
+          <div
+            style={{
+              display: "flex",
+              overflow: "hidden",
+              color: "#D1D5DB",
+              fontSize: "0.875rem",
+              lineHeight: "1.25rem",
+              flexWrap: "wrap",
+              alignItems: "center",
+              rowGap: "0.25rem",
+            }}
+          >
+            <div className="mr-8">{getDateString()}</div>
+            <div
+              style={{
+                display: "flex",
+                marginLeft: "-1rem",
+                alignItems: "center",
+                columnGap: "1rem",
               }}
             >
-              Details
-            </button>
-            {/* <Link to={`/product/${result.id}`} className="btn">
-              Details
-            </Link> */}
+              <svg
+                viewBox="0 0 2 2"
+                style={{
+                  marginLeft: "-0.125rem",
+                  flex: "none",
+                  width: "0.125rem",
+                  height: "0.125rem",
+                }}
+              >
+                <circle cx={1} cy={1} r={1} />
+              </svg>
+              <div style={{ display: "flex", columnGap: "0.625rem" }}></div>
+            </div>
           </div>
+          <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
+            <a href={resData.landingPageUrl}>
+              <span className="absolute inset-0" />
+              {resData.name}
+            </a>
+          </h3>
         </article>
       )}
     </>
   );
 }
-
-const Wrapper = styled.article`
-  .container {
-    position: relative;
-    border-radius: var(--radius);
-    background: lightgray;
-  }
-  img {
-    height: 255px !important;
-    width: 100%;
-    display: block;
-    object-fit: cover;
-    border-radius: var(--radius);
-    transition: var(--transition);
-  }
-  .link {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--clr-primary-5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    transition: var(--transition);
-    opacity: 0;
-    cursor: pointer;
-    svg {
-      font-size: 1.25rem;
-      color: var(--clr-white);
-    }
-  }
-  .container:hover img {
-    opacity: 0.5;
-  }
-  .container:hover .link {
-    opacity: 1;
-  }
-  footer {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  footer h5,
-  footer p {
-    margin-bottom: 0;
-    font-weight: 400;
-  }
-  footer p {
-    color: var(--clr-primary-5);
-    letter-spacing: var(--spacing);
-  }
-`;
+const getDateString = () => {
+  var dt = new Date();
+  var month = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let res =
+    month[dt.getMonth()] + ". " + dt.getDate() + ", " + dt.getFullYear();
+  console.log(res);
+  return res.toString();
+};

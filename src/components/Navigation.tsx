@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
-import { provideHeadless, SandboxEndpoints } from "@yext/search-headless-react";
-import logo from "../assets/logo.png";
+import { provideHeadless } from "@yext/search-headless-react";
 import { FaBars } from "react-icons/fa";
 import {
   DropdownItem,
@@ -18,7 +17,6 @@ const Navigation = ({ links }: any) => {
   const visualAutocompleteConfig: VisualAutocompleteConfig = {
     entityPreviewSearcher: provideHeadless({
       ...answersHeadlessConfig,
-      endpoints: SandboxEndpoints,
       headlessId: "visual-autocomplete",
     }),
     includedVerticals: ["products"],
@@ -40,14 +38,14 @@ const Navigation = ({ links }: any) => {
                 <div className="SB_container2">
                   <div>
                     <img
-                      src={r.rawData?.primaryPhoto?.image?.url}
+                      src={r.rawData?.photoGallery[0]?.image?.url}
                       className="SB_iconDetails"
                       alt={r.rawData.name}
                     />
                   </div>
                   <div style={{ marginLeft: "5em" }}>
                     <h4>{r.name}</h4>
-                    <div>{r.rawData?.c_price}</div>
+                    <div>${r.rawData?.price.value}</div>
                   </div>
                 </div>
               </Link>
@@ -83,7 +81,6 @@ const Navigation = ({ links }: any) => {
         </ul>
         <div className="nav-header">
           <NavLink to="/" className="logoClass">
-            {/* <img src={logo} alt="logo" /> */}
             <img
               src="https://cdn.shopify.com/s/files/1/0041/1018/8642/files/Greyson_Logo_3009f28e-551b-4b96-a8f8-d7c6d1b8968c.png?v=1646951009&width=250"
               alt=""
