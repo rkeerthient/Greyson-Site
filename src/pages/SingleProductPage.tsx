@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 import { useCartContext } from "../context/CartContext";
 import Cart from "../components/CartComponents/Cart";
 import { Markdown } from "react-showdown";
+import StarRating from "../components/starRating";
 
 type ParamTypes = {
   id: string;
@@ -142,9 +143,20 @@ const SingleProductPage = () => {
                 )}
                 <section className="content">
                   <h2>{data?.name}</h2>
-                  {data.price && <h5 className="price">${data.price.value}</h5>}
+                  <div className="flex" style={{ gap: "2em" }}>
+                    {data.price && (
+                      <h5 className="price">${data.price.value}</h5>
+                    )}
+                    <p className="text-xl text-gray-700">
+                      <StarRating selectedStars={data.c_stars} />
+                      <span style={{ marginLeft: "0.5em" }}>
+                        {data.c_reviewsCount} REVIEWS
+                      </span>
+                    </p>
+                  </div>
+
                   <span className="desc">
-                    <Markdown markdown={data.richTextDescription} />{" "}
+                    <Markdown markdown={data.richTextDescription} />
                   </span>
                   {data?.c_department && (
                     <p className="info">
@@ -168,18 +180,14 @@ const SingleProductPage = () => {
                     <CartWrapper>
                       <div className="colors">
                         <span>colour :</span>
-                        {/* <div
+                        <div
                           style={{
                             backgroundColor: data.color,
                             height: "1.5em",
                             width: "1.5em",
                             borderRadius: "50%",
                           }}
-                        ></div> */}
-                        {data.c_productVariants &&
-                          data.c_productVariants.map(
-                            (item: any, index: any) => item.name
-                          )}
+                        ></div>
                       </div>
                       <div className="btn-container">
                         <Cart

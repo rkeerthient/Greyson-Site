@@ -79,17 +79,19 @@ interface Meta2 {
 }
 
 const FeaturedProducts = () => {
-  const [data, setData] = useState<Root["response"] | null>();
+  const [data, setData] = useState<any | null>();
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchFeaturedProducts = async () => {
     setIsLoading(true);
     try {
       const responseData = await fetch(
-        `https://liveapi-sandbox.yext.com/v2/accounts/me/entities?api_key=${process.env.REACT_APP_KEY}&v=20220101&entityTypes=product&filter={"c_featuredProduct": {"$eq": true}}`
+        `https://liveapi.yext.com/v2/accounts/me/entities?api_key=492b4f850dc811953f9419b7574ca389&v=20220101&entityTypes=product&filter={"c_featuredProduct": {"$eq": true}}`
       );
-      const responseJson: Root = await responseData.json();
-       setIsLoading(false);
+      const responseJson = await responseData.json();
+      console.log(responseJson);
+
+      setIsLoading(false);
       setData(await responseJson.response);
     } catch (err) {
       console.log(err);
@@ -111,17 +113,19 @@ const FeaturedProducts = () => {
           <div className="underline"></div>
         </div>
         <div className="section-center featured">
-          {data?.entities.map((item, index) => (
+          {data.entities.map((item: any, index: any) => (
             <WrapperProd key={index}>
               <div className="container">
-                <img src={item.primaryPhoto.image.url} alt="" />
+                {item.photoGallery && (
+                  <img src={item.photoGallery[0].image.url} alt="" />
+                )}
                 <Link to={`/product/${item.meta.id}`} className="link">
                   <FaSearch />
                 </Link>
               </div>
               <footer>
                 <h5>{item.name}</h5>
-                <p>{item.c_price}</p>
+                {/* <p>{item.c_price}</p> */}
               </footer>
             </WrapperProd>
           ))}

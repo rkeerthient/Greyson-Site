@@ -89,7 +89,9 @@ export function ProductCard(props: ProductCardProps): JSX.Element {
             </div>
             <footer>
               <h5>{result.name}</h5>
-              <p>${resData.price.value}</p>
+              <div className="flex gap-2">
+                 <p>${resData.price.value}</p>
+              </div>
             </footer>
           </div>
         </Wrapper>
