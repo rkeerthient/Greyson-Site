@@ -121,9 +121,9 @@ export function ProductCard(props: ProductCardProps): JSX.Element {
             >
               Details
             </button>
-            {/* <Link to={`/product/${result.id}`} className="btn">
+            <Link to={`/product/${result.id}`} className="btn">
               Details
-            </Link> */}
+            </Link>
           </div>
         </article>
       )}
