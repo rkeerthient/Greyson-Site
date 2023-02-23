@@ -85,7 +85,7 @@ const FacetsSection = () => {
       {priceValues[0] && priceValues[1] && (
         <div className="content">
           <FilterDisplayManager>
-            {/* <PriceRange /> */}
+            <PriceRange />
             <Divider />
             <Facets
               cssCompositionMethod="assign"

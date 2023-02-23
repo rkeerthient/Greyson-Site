@@ -6,6 +6,7 @@ import { useProductsContext } from "../../context/ProductsContext";
 import Loading from "../Loading";
 import {
   Matcher,
+  SelectableStaticFilter,
   useSearchActions,
   useSearchState,
 } from "@yext/search-headless-react";
@@ -35,38 +36,42 @@ const ProductsListContainer = (props: any) => {
     }
   }, [sortType]);
 
-  // useEffect(() => {
-  //   if (
-  //     !initLoad &&
-  //     JSON.stringify(priceValues) !== JSON.stringify(tempPriceValues)
-  //   ) {
-  //     const selectedFilters: SelectableFilter[] = [];
-  //     const priceFilter = getPriceRange();
-  //     priceFilter && selectedFilters.push(priceFilter);
-  //     answersActions.setStaticFilters(selectedFilters);
-  //     answersActions.executeVerticalQuery();
-  //   } else {
-  //     setTempPriceValues(priceValues);
-  //   }
-  // }, [priceValues]);
+  useEffect(() => {
+    if (
+      !initLoad &&
+      JSON.stringify(priceValues) !== JSON.stringify(tempPriceValues)
+    ) {
+      const selectedFilters: SelectableStaticFilter[] = [];
+      const priceFilter = getPriceRange();
+      priceFilter && selectedFilters.push(priceFilter);
+      answersActions.setStaticFilters(selectedFilters);
+      answersActions.executeVerticalQuery();
+    } else {
+      setTempPriceValues(priceValues);
+    }
+  }, [priceValues]);
 
-  // const getPriceRange = (): SelectableFilter | undefined => {
-  //   if (priceValues[0] && priceValues[1]) {
-  //     return {
-  //       displayName: `$${priceValues[0]} - $${priceValues[1]}`,
-  //       selected: true,
-  //       fieldId: "price.value",
-  //       value: {
-  //         start: {
-  //           matcher: Matcher.GreaterThanOrEqualTo,
-  //           value: priceValues[0],
-  //         },
-  //         end: { matcher: Matcher.LessThanOrEqualTo, value: priceValues[1] },
-  //       },
-  //       matcher: Matcher.Between,
-  //     };
-  //   }
-  // };
+  const getPriceRange = (): SelectableStaticFilter | undefined => {
+    if (priceValues[0] && priceValues[1]) {
+      return {
+        displayName: `$${priceValues[0]} - $${priceValues[1]}`,
+        selected: true,
+        filter: {
+          kind: "fieldValue",
+          fieldId: "price.value",
+          value: {
+            start: {
+              matcher: Matcher.GreaterThanOrEqualTo,
+              value: priceValues[0],
+            },
+            end: { matcher: Matcher.LessThanOrEqualTo, value: priceValues[1] },
+          },
+          matcher: Matcher.Between,
+        },
+      };
+    }
+  };
+
   const isLoading = useSearchState((state) => state.searchStatus.isLoading);
 
   const state = useSearchState((state) => state);

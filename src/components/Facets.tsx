@@ -2,6 +2,7 @@ import {
   useSearchState,
   useSearchActions,
   DisplayableFacetOption,
+  SelectableStaticFilter,
 } from "@yext/search-headless-react";
 import { StandardFacets } from "@yext/search-ui-react";
 import {
@@ -60,14 +61,14 @@ export default function Facets(props: FacetsProps): JSX.Element {
   const answersActions = useSearchActions();
   const executeSearch = () => answersActions.executeVerticalQuery();
 
-  // const handleResetFacets = () => {
-  //   const selectedFilters: SelectableFilter[] = [];
-  //   answersActions.resetFacets();
-  //   answersActions.setStaticFilters(selectedFilters);
-  //   if (searchOnChange) {
-  //     executeSearch();
-  //   }
-  // };
+  const handleResetFacets = () => {
+    const selectedFilters: SelectableStaticFilter[] = [];
+    answersActions.resetFacets();
+    answersActions.setStaticFilters(selectedFilters);
+    if (searchOnChange) {
+      executeSearch();
+    }
+  };
 
   const handleFacetOptionChange = (
     fieldId: string,

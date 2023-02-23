@@ -76,6 +76,8 @@ export function ProductCard(props: ProductCardProps): JSX.Element {
   const { setProdId, setIsModalOpen } = useProductsContext();
   const resData = result.rawData as unknown as any;
   const { isGrid } = useProductsContext();
+  console.log(isGrid);
+
   return isGrid ? (
     <div>
       {resData.photoGallery && (
@@ -90,7 +92,7 @@ export function ProductCard(props: ProductCardProps): JSX.Element {
             <footer>
               <h5>{result.name}</h5>
               <div className="flex gap-2">
-                 <p>${resData.price.value}</p>
+                <p>${resData.price.value}</p>
               </div>
             </footer>
           </div>
@@ -99,9 +101,9 @@ export function ProductCard(props: ProductCardProps): JSX.Element {
     </div>
   ) : (
     <>
-      {resData.primaryPhoto && (
+      {resData.photoGallery && (
         <article>
-          <img src={resData.primaryPhoto.image.url} alt="" />
+          <img src={resData.photoGallery[0].image.url} alt="" />
           <div>
             <h4>{result.name}</h4>
             <h5 className="price">{resData.c_price}</h5>
