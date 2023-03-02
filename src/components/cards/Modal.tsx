@@ -4,14 +4,13 @@ import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { useCartContext } from "../../context/CartContext";
 import { useProductsContext } from "../../context/ProductsContext";
-import { RootObject } from "../../pages/SingleProductPage";
 import Cart from "../CartComponents/Cart";
 import Loading from "../Loading";
 
 const Modal = () => {
   const { prodId, setIsModalOpen } = useProductsContext();
   const [amount, setAmount] = useState(1);
-  const [data, setData] = useState<RootObject["response"] | null>();
+  const [data, setData] = useState<any | null>();
   const [isLoading, setIsLoading] = useState(false);
   const { addToCart } = useCartContext();
   const fetchProduct = async () => {
@@ -20,7 +19,7 @@ const Modal = () => {
       const response = await fetch(
         `https://liveapi.yext.com/v2/accounts/3147081/entities/${prodId}?api_key=492b4f850dc811953f9419b7574ca389&v=20220101`
       );
-      const responseJson: RootObject = await response.json();
+      const responseJson: any = await response.json();
       setData(await responseJson.response);
       setIsLoading(false);
     } catch (err) {
@@ -94,7 +93,7 @@ const Modal = () => {
                     <div className="colors">
                       <span>colors :</span>
                       <div>
-                        {data?.c_color.map((color, index) => {
+                        {data?.c_color.map((color: any, index: any) => {
                           return (
                             <button
                               className="color-btn"

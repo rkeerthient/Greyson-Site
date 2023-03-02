@@ -14,92 +14,107 @@ type ParamTypes = {
   id: string;
 };
 
-export interface Meta {
-  uuid: string;
-  errors: any[];
+export interface Root {
+  docs: Doc[];
+  count: number;
 }
 
-export interface Thumbnail {
-  url: string;
-  width: number;
-  height: number;
+export interface Doc {
+  $key: Key;
+  c_oldPrice: COldPrice;
+  c_productVariants: CProductVariant[];
+  c_reviewsCount: string;
+  c_stars: string;
+  color: string;
+  id: string;
+  name: string;
+  photoGallery: PhotoGallery2[];
+  price: Price;
+  richTextDescription: string;
+  size: string;
 }
 
-export interface Image {
-  url: string;
-  width: number;
-  height: number;
-  sourceUrl: string;
-  thumbnails: Thumbnail[];
+export interface Key {
+  locale: string;
+  primary_key: string;
 }
 
-export interface PrimaryPhoto {
+export interface COldPrice {
+  currencyCode: string;
+  value: string;
+}
+
+export interface CProductVariant {
+  color: string;
+  id: string;
+  photoGallery: PhotoGallery[];
+  size: string;
+}
+
+export interface PhotoGallery {
   image: Image;
 }
 
-export interface CPrimaryCTA {
-  label: string;
-  linkType: string;
-  link: string;
+export interface Image {
+  height: number;
+  url: string;
+  width: number;
 }
 
-export interface Meta2 {
-  accountId: string;
-  uid: string;
-  id: string;
-  timestamp: Date;
-  folderId: string;
-  language: string;
-  countryCode: string;
-  entityType: string;
+export interface PhotoGallery2 {
+  image: Image2;
 }
 
-export interface Response {
-  landingPageUrl: string;
-  savedFilters: string[];
-  primaryPhoto: PrimaryPhoto;
-  name: string;
-  c_cCategory: string[];
-  c_color: string[];
-  c_department: string;
-  c_price: string[];
-  c_primaryCTA: CPrimaryCTA;
-  c_productCategory: string[];
-  c_subtitle: string[];
-  c_type: string[];
-  meta: Meta2;
+export interface Image2 {
+  height: number;
+  url: string;
+  width: number;
 }
 
-export interface RootObject {
-  meta: Meta;
-  response: Response;
+export interface Price {
+  currencyCode: string;
+  value: string;
 }
 
 const SingleProductPage = () => {
   const [amount, setAmount] = useState(1);
   const { id } = useParams<ParamTypes>();
-  const [data, setData] = useState<any | null>();
+  const [data, setData] = useState<Doc | null>();
   const [isLoading, setIsLoading] = useState(false);
   const { addToCart } = useCartContext();
+
   const fetchProduct = async () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://liveapi.yext.com/v2/accounts/me/entities/${id}?api_key=492b4f850dc811953f9419b7574ca389&v=20220101`
-      );
-      console.log(
-        `https://liveapi.yext.com/v2/accounts/me/entities/${id}?api_key=492b4f850dc811953f9419b7574ca389&v=20220101`
+        `https://streams.yext.com/v2/accounts/me/api/allProducts?api_key=492b4f850dc811953f9419b7574ca389&v=20220101&id=${id}`
       );
 
       const responseJson = await response.json();
       console.log(JSON.stringify(responseJson.response));
-      setData(await responseJson.response);
+      setData(await responseJson.response.docs[0]);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
       setIsLoading(false);
     }
   };
+
+  const updateVariant = async (id: any) => {
+    try {
+      const response = await fetch(
+        `https://streams.yext.com/v2/accounts/me/api/allProducts?api_key=492b4f850dc811953f9419b7574ca389&v=20220101&id=${id}`
+      );
+
+      const responseJson = await response.json();
+      console.log(JSON.stringify(responseJson.response));
+      setData(await responseJson.response.docs[0]);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+  };
+
   const increase = () => {
     setAmount((oldAmount) => {
       var amnt = oldAmount + 1;
@@ -144,6 +159,14 @@ const SingleProductPage = () => {
                 <section className="content">
                   <h2>{data?.name}</h2>
                   <div className="flex" style={{ gap: "2em" }}>
+                    {data.c_oldPrice.value && (
+                      <h5
+                        className="price "
+                        style={{ textDecoration: "line-through" }}
+                      >
+                        ${data.c_oldPrice.value}
+                      </h5>
+                    )}
                     {data.price && (
                       <h5 className="price">${data.price.value}</h5>
                     )}
@@ -158,36 +181,40 @@ const SingleProductPage = () => {
                   <span className="desc">
                     <Markdown markdown={data.richTextDescription} />
                   </span>
-                  {data?.c_department && (
-                    <p className="info">
-                      <span>For : </span> {data?.c_department}
-                    </p>
-                  )}
-                  {data?.c_productCategory && (
-                    <p className="info">
-                      <span>Type : </span>
-                      {data?.c_productCategory}
-                    </p>
-                  )}
-                  {data?.c_cCategory && (
-                    <p className="info">
-                      <span>Category : </span>
-                      {data?.c_cCategory}
-                    </p>
-                  )}
                   <hr />
                   {data?.color && (
                     <CartWrapper>
                       <div className="colors">
                         <span>colour :</span>
-                        <div
-                          style={{
-                            backgroundColor: data.color,
-                            height: "1.5em",
-                            width: "1.5em",
-                            borderRadius: "50%",
-                          }}
-                        ></div>
+                        <ul style={{ display: "flex", gap: "0.5em" }}>
+                          <li
+                            key={data.id}
+                            onClick={() => updateVariant(data.id)}
+                            style={{
+                              backgroundColor: data.color,
+                              height: "1.5em",
+                              width: "1.5em",
+                              borderRadius: "50%",
+                            }}
+                          ></li>
+
+                          {data.c_productVariants &&
+                            data.c_productVariants.map((item: any) => {
+                              console.log(JSON.stringify(item.rawData));
+                              return (
+                                <li
+                                  key={item.id}
+                                  onClick={() => updateVariant(item.id)}
+                                  style={{
+                                    backgroundColor: item.color,
+                                    height: "1.5em",
+                                    width: "1.5em",
+                                    borderRadius: "50%",
+                                  }}
+                                ></li>
+                              );
+                            })}
+                        </ul>
                       </div>
                       <div className="btn-container">
                         <Cart
@@ -199,7 +226,7 @@ const SingleProductPage = () => {
                           to="/cart"
                           className="btn"
                           onClick={() => {
-                            addToCart(id, data.c_color[0], amount, data);
+                            addToCart(id, data.color[0], amount, data);
                           }}
                         >
                           add to cart
@@ -257,8 +284,9 @@ const Wrapper = styled.main`
 const CartWrapper = styled.section`
   margin-top: 2rem;
   .colors {
-    display: grid;
-    grid-template-columns: 125px 1fr;
+    display: flex;
+    gap: 0.5em;
+    // grid-template-columns: 125px 1fr;
     align-items: center;
     margin-bottom: 1rem;
     span {

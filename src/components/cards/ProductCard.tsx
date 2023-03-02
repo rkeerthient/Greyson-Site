@@ -71,12 +71,13 @@ export interface CPrimaryCta {
 
 export interface HighlightedFields {}
 
-export function ProductCard(props: ProductCardProps): JSX.Element {
+export function ProductCard(props: any): JSX.Element {
   const { result } = props;
   const { setProdId, setIsModalOpen } = useProductsContext();
   const resData = result.rawData as unknown as any;
+  console.log(JSON.stringify(resData.c_productVariants));
+
   const { isGrid } = useProductsContext();
-  console.log(isGrid);
 
   return isGrid ? (
     <div>
@@ -92,6 +93,11 @@ export function ProductCard(props: ProductCardProps): JSX.Element {
             <footer>
               <h5>{result.name}</h5>
               <div className="flex gap-2">
+                {/* {resData.c_oldPrice.value && (
+                  <p style={{ textDecoration: "line-through" }}>
+                    ${resData.c_oldPrice.value}
+                  </p>
+                )} */}
                 <p>${resData.price.value}</p>
               </div>
             </footer>
