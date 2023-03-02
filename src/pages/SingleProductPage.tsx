@@ -195,22 +195,33 @@ const SingleProductPage = () => {
                               height: "1.5em",
                               width: "1.5em",
                               borderRadius: "50%",
+                              border: "1px solid",
                             }}
                           ></li>
 
                           {data.c_productVariants &&
                             data.c_productVariants.map((item: any) => {
-                              console.log(JSON.stringify(item.rawData));
                               return (
                                 <li
                                   key={item.id}
                                   onClick={() => updateVariant(item.id)}
-                                  style={{
-                                    backgroundColor: item.color,
-                                    height: "1.5em",
-                                    width: "1.5em",
-                                    borderRadius: "50%",
-                                  }}
+                                  style={
+                                    item.c_colorCode.includes("linear")
+                                      ? {
+                                          backgroundImage: item.c_colorCode,
+                                          height: "1.5em",
+                                          width: "1.5em",
+                                          borderRadius: "50%",
+                                          border: "1px solid",
+                                        }
+                                      : {
+                                          backgroundColor: item.c_colorCode,
+                                          height: "1.5em",
+                                          width: "1.5em",
+                                          borderRadius: "50%",
+                                          border: "1px solid",
+                                        }
+                                  }
                                 ></li>
                               );
                             })}
