@@ -15,15 +15,29 @@ type ParamTypes = {
 };
 
 export interface Root {
+  meta: Meta;
+  response: Response;
+}
+
+export interface Meta {
+  uuid: string;
+  errors: any[];
+}
+
+export interface Response {
   docs: Doc[];
   count: number;
 }
 
 export interface Doc {
   $key: Key;
+  c_additionalFeatures: string[];
+  c_colorCode: string;
   c_oldPrice: COldPrice;
+  c_onSale: boolean;
   c_productVariants: CProductVariant[];
   c_reviewsCount: string;
+  c_shortDecription: string;
   c_stars: string;
   color: string;
   id: string;
@@ -45,6 +59,7 @@ export interface COldPrice {
 }
 
 export interface CProductVariant {
+  c_colorCode: string;
   color: string;
   id: string;
   photoGallery: PhotoGallery[];
@@ -179,7 +194,7 @@ const SingleProductPage = () => {
                   </div>
 
                   <span className="desc">
-                    <Markdown markdown={data.richTextDescription} />
+                    <Markdown markdown={data.c_shortDecription} />
                   </span>
                   <hr />
                   {data?.color && (

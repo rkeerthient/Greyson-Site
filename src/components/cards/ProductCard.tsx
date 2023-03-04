@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -72,33 +73,81 @@ export interface CPrimaryCta {
 export interface HighlightedFields {}
 
 export function ProductCard(props: any): JSX.Element {
+  const [variant, setVariant] = useState();
+  const [currImg, setCurrImg] = useState();
   const { result } = props;
   const { setProdId, setIsModalOpen } = useProductsContext();
-  const resData = result.rawData as unknown as any;
-  console.log(JSON.stringify(resData.c_productVariants));
+  const [resData, setResData] = useState(result.rawData) as unknown as any;
+  const updateVariant = async (id: any) => {
+    try {
+      const response = await fetch(
+        `https://streams.yext.com/v2/accounts/me/api/allProducts?api_key=492b4f850dc811953f9419b7574ca389&v=20220101&id=${id}`
+      );
 
+      const responseJson = await response.json();
+      console.log(JSON.stringify(responseJson.response));
+      setResData(await responseJson.response.docs[0]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const { isGrid } = useProductsContext();
 
   return isGrid ? (
     <div>
-      {resData.photoGallery && (
+      {(currImg || resData.photoGallery) && (
         <Wrapper>
           <div>
             <div className="container">
-              <img src={resData.photoGallery[0].image.url} alt="" />
+              <img src={currImg || resData.photoGallery[0].image.url} alt="" />
               <Link to={`/product/${result.id}`} className="link">
                 <FaEye />
               </Link>
             </div>
             <footer>
-              <h5>{result.name}</h5>
-              <div className="flex gap-2">
-                {/* {resData.c_oldPrice.value && (
-                  <p style={{ textDecoration: "line-through" }}>
-                    ${resData.c_oldPrice.value}
-                  </p>
-                )} */}
+              <div className="flex flex-col gap-2">
+                <h5>{result.name}</h5>
                 <p>${resData.price.value}</p>
+                <ul style={{ display: "flex", gap: "0.5em" }}>
+                  <li
+                    key={result.id}
+                    onClick={() => updateVariant(result.id)}
+                    style={{
+                      backgroundColor: resData.color,
+                      height: "1.5em",
+                      width: "1.5em",
+                      borderRadius: "50%",
+                      border: "1px solid",
+                    }}
+                  ></li>
+
+                  {resData.c_productVariants &&
+                    resData.c_productVariants.map((item: any, index: any) => {
+                      return (
+                        <li
+                          key={item.id}
+                          onClick={() => updateVariant(item.id)}
+                          style={
+                            item.c_colorCode.includes("linear")
+                              ? {
+                                  backgroundImage: item.c_colorCode,
+                                  height: "1.5em",
+                                  width: "1.5em",
+                                  borderRadius: "50%",
+                                  border: "1px solid",
+                                }
+                              : {
+                                  backgroundColor: item.c_colorCode,
+                                  height: "1.5em",
+                                  width: "1.5em",
+                                  borderRadius: "50%",
+                                  border: "1px solid",
+                                }
+                          }
+                        ></li>
+                      );
+                    })}
+                </ul>
               </div>
             </footer>
           </div>
