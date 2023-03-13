@@ -6,9 +6,6 @@ const PriceRangeSlider = ({ min, max }: any) => {
 
   const [value, setValue] = useState([min, max]);
   const [range, setRange] = useState([min, max]);
-  console.log(value);
-  console.log(range);
-
   const rangeSelector = (event: any, newValue: any) => {
     setValue(newValue);
     setPriceValues(newValue);

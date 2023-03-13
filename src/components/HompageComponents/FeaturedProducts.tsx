@@ -89,8 +89,7 @@ const FeaturedProducts = () => {
         `https://liveapi.yext.com/v2/accounts/me/entities?api_key=492b4f850dc811953f9419b7574ca389&v=20220101&entityTypes=product&filter={"c_featuredProduct": {"$eq": true}}`
       );
       const responseJson = await responseData.json();
-      console.log(responseJson);
-
+ 
       setIsLoading(false);
       setData(await responseJson.response);
     } catch (err) {

@@ -107,6 +107,5 @@ const getDateString = () => {
   ];
   let res =
     month[dt.getMonth()] + ". " + dt.getDate() + ", " + dt.getFullYear();
-  console.log(res);
-  return res.toString();
+   return res.toString();
 };
