@@ -1,9 +1,8 @@
 import Slider from "@material-ui/core/Slider";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useProductsContext } from "../../context/ProductsContext";
-const TestPriceSlider = ({ min, max }: any) => {
-  const { setPriceValues, tempPriceValues, setInitLoad } = useProductsContext();
+const PriceRangeSlider = ({ min, max }: any) => {
+  const { setPriceValues, setInitLoad } = useProductsContext();
 
   const [value, setValue] = useState([min, max]);
   const [range, setRange] = useState([min, max]);
@@ -50,4 +49,4 @@ const TestPriceSlider = ({ min, max }: any) => {
   );
 };
 
-export default TestPriceSlider;
+export default PriceRangeSlider;

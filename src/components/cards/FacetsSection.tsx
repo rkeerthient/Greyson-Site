@@ -14,7 +14,7 @@ import { useProductsContext } from "../../context/ProductsContext";
 import { Divider } from "../StaticFilters";
 import { PriceRange } from "./PriceRange";
 import { NumericalFacets, StandardFacets } from "@yext/search-ui-react";
-import TestPriceSlider from "./TestPriceSlider";
+import PriceRangeSlider from "./PriceRangeSlider";
 
 const FacetsSection = () => {
   const facetConfig = {
@@ -86,8 +86,7 @@ const FacetsSection = () => {
       {priceValues[0] && priceValues[1] && (
         <div className="content">
           <FilterDisplayManager>
-            {/* <PriceRange /> */}
-            <TestPriceSlider min={priceValues[0]} max={priceValues[1]} />
+            <PriceRangeSlider min={priceValues[0]} max={priceValues[1]} />
             <Divider />
             <Facets
               cssCompositionMethod="assign"
