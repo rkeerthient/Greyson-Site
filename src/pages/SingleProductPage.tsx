@@ -99,6 +99,8 @@ const SingleProductPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [colors, setColors] = useState<any[]>([]);
   const [currColor, setCurrColor] = useState(0);
+  const [prodDet, setProdDet] = useState<boolean | null>(false);
+  const [care, setCare] = useState<boolean | null>(false);
   const [sizeTypes, setSizeTypes] = useState([
     {
       txt: ["s", "m", "l", "xl", "xxl", "xxxl"],
@@ -197,7 +199,7 @@ const SingleProductPage = () => {
                 )}
                 <section className="content">
                   <h2>{data?.name}</h2>
-                  <div className="flex" style={{ gap: "2em" }}>
+                  <div className="flex" style={{ gap: "0.5em" }}>
                     {colors[currColor].c_oldPrice && (
                       <h5
                         className="price "
@@ -211,7 +213,7 @@ const SingleProductPage = () => {
                     )}
                     <p className="text-xl text-gray-700">
                       <StarRating selectedStars={data.c_stars} />
-                      <span style={{ marginLeft: "0.5em" }}>
+                      <span style={{ marginLeft: "0.5em", fontSize: " 14px" }}>
                         {data.c_reviewsCount} REVIEWS
                       </span>
                     </p>
@@ -223,6 +225,7 @@ const SingleProductPage = () => {
                   <hr />
                   {colors && (
                     <>
+                      <div style={{ fontWeight: "bold" }}>Colors</div>
                       <ul style={{ display: "flex", gap: "0.5em" }}>
                         {colors.map((item: any, index: number) => {
                           return (
@@ -292,6 +295,46 @@ const SingleProductPage = () => {
                         )
                       : "Number"}
                   </div>
+                  <div style={{ marginTop: "1em", cursor: "pointer" }}>
+                    <div
+                      className="flex"
+                      style={{
+                        gap: "0.25em",
+                        alignItems: "center",
+                        border: "1px solid",
+                        width: "fit-content",
+                        padding: "0.75em",
+                      }}
+                    >
+                      <div>
+                        <img
+                          style={{ height: "18px", width: "18px" }}
+                          src="https://cdn.truefitcorp.com/store-gry/7.0.0-latest.34/resources/store/gry/images-snapshot/responsive/logo/bg-logo-black.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div>Whats my size?</div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      marginTop: "1em",
+                      fontWeight: "bold",
+                      textDecoration: "underline",
+                      paddingTop: "0.75em",
+                      paddingBottom: "0.75em",
+                      textTransform: "uppercase",
+                      fontSize: "0.85em",
+                    }}
+                  >
+                    Size guide
+                  </div>
+                  <div
+                    style={{ marginTop: "1em", cursor: "pointer" }}
+                    className="addButClass"
+                  >
+                    <div className="addBut">Add to Bag</div>
+                  </div>
                   <div className="product__icons">
                     {addFeatures &&
                       data.c_additionalFeatures.map((item: any, index: any) => (
@@ -304,6 +347,77 @@ const SingleProductPage = () => {
                         </div>
                       ))}
                   </div>
+                  <div style={{ marginTop: "1.5em" }}>
+                    <div
+                      style={{
+                        borderTop: "1px solid #ccc",
+                        borderBottom: "1px solid #ccc",
+                        paddingTop: "1em",
+                        paddingBottom: "1em",
+                      }}
+                      onClick={() => setProdDet(!prodDet)}
+                    >
+                      <div
+                        style={{
+                          fontSize: "18px",
+                          color: "black",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Product Details
+                      </div>
+                      {prodDet && (
+                        <span
+                          style={{
+                            marginTop: "1em",
+                            fontSize: "14px",
+                            color: "#ccc",
+                          }}
+                        >
+                          The Comanche Hybrid golf vest is the perfect blend of
+                          style and comfort. Featuring two tones in our best
+                          selling colors, this vest is windproof and combines a
+                          water-resistant upper panel with an 8-way stretch
+                          Italian fabric found on the lower body. Constructed
+                          from a comfort fabric blend, this golf vest features a
+                          half zipper with a covered placket for a sleek look.
+                          Finished with an elastic hem for ultimate comfort and
+                          freedom of movement.
+                        </span>
+                      )}
+                    </div>
+                    <div
+                      style={{
+                        borderTop: "1px solid #ccc",
+                        borderBottom: "1px solid #ccc",
+                        paddingTop: "1em",
+                        paddingBottom: "1em",
+                      }}
+                      onClick={() => setCare(!care)}
+                    >
+                      <div
+                        style={{
+                          fontSize: "18px",
+                          color: "black",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Care
+                      </div>
+                      {care && (
+                        <span
+                          style={{
+                            marginTop: "1em",
+                            fontSize: "14px",
+                            color: "#ccc",
+                          }}
+                        >
+                          Wash In 40 Degree | Wash With Similar Colors | Do Not
+                          Bleach | Do Not Tumble Dry | Low Iron | Can Dry Clean
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </section>
               </div>
             </div>
@@ -315,6 +429,12 @@ const SingleProductPage = () => {
 };
 
 const Wrapper = styled.main`
+  h2 {
+    font-size: 24px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+  }
   .product-center {
     display: grid;
     gap: 4rem;
@@ -322,6 +442,7 @@ const Wrapper = styled.main`
   }
   .price {
     color: var(--clr-primary-5);
+    font-size: 18px;
   }
   .desc {
     line-height: 2;
@@ -408,6 +529,30 @@ const Wrapper = styled.main`
     color: #ccc;
     border-color: #ccc;
     position: relative;
+  }
+
+  .addBut {
+    display: flex;
+    width: 100%;
+    min-height: 4rem;
+    transition: all 0.25s ease-in-out;
+    text-align: center;
+
+    font-weight: 400;
+    text-transform: uppercase;
+    justify-content: center;
+    align-items: center;
+  }
+  .addButClass {
+    background: black;
+    color: white;
+    border: 1px solid white;
+
+    &:hover {
+      background: white;
+      color: black;
+      border: 1px solid black;
+    }
   }
 `;
 
