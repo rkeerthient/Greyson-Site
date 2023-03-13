@@ -143,7 +143,6 @@ const SingleProductPage = () => {
           })
         );
       setColors([...colors, ...nArray]);
-
       setIsLoading(false);
     }
   }, [data]);

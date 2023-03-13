@@ -13,7 +13,7 @@ export function ProductCard(props: any): JSX.Element {
   const [colors, setColors] = useState<any[]>([]);
   const [currColor, setCurrColor] = useState(0);
   const [resData, setResData] = useState(result.rawData) as unknown as any;
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     let nArray: any = [];
     nArray.push({
@@ -36,18 +36,19 @@ export function ProductCard(props: any): JSX.Element {
             price: item.price ? item.price.value : 0,
           })
       );
-    !colors && setColors([...colors, ...nArray]);
+    !colors.length && setColors([...colors, ...nArray]);
+    setIsLoading(false);
   }, [result]);
 
   const { isGrid } = useProductsContext();
 
   return isGrid ? (
     <div>
-      {(currImg || resData.photoGallery) && (
+      {(currImg || resData.photoGallery) && colors && !isLoading && (
         <Wrapper>
           <div>
             <div className="container">
-              <img src={currImg || resData.photoGallery[0].image.url} alt="" />
+              <img src={colors[currColor].photoGallery[0].image.url} alt="" />
               <Link to={`/product/${result.id}`} className="link">
                 <FaEye />
               </Link>
@@ -57,41 +58,43 @@ export function ProductCard(props: any): JSX.Element {
                 <h5>{result.name}</h5>
                 <p>${resData.price.value}</p>
                 {colors && (
-                  <ul style={{ display: "flex", gap: "0.5em" }}>
-                    {colors.map((item: any, index: number) => {
-                      return (
-                        <li
-                          key={item.id}
-                          className={`${
-                            currColor === index
-                              ? "color-btn active"
-                              : "color-btn"
-                          }`}
-                          onClick={() => setCurrColor(index)}
-                        >
-                          <div
-                            style={
-                              item.colorCode.includes("linear")
-                                ? {
-                                    backgroundImage: item.colorCode,
-                                    height: "1.5em",
-                                    width: "1.5em",
-                                    borderRadius: "50%",
-                                    border: "1px solid",
-                                  }
-                                : {
-                                    backgroundColor: item.colorCode,
-                                    height: "1.5em",
-                                    width: "1.5em",
-                                    borderRadius: "50%",
-                                    border: "1px solid",
-                                  }
-                            }
-                          ></div>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  <>
+                    <ul style={{ display: "flex", gap: "0.5em" }}>
+                      {colors.map((item: any, index: number) => {
+                        return (
+                          <li
+                            key={item.id}
+                            className={`${
+                              currColor === index
+                                ? "color-btn active"
+                                : "color-btn"
+                            }`}
+                            onClick={() => setCurrColor(index)}
+                          >
+                            <div
+                              style={
+                                item.colorCode.includes("linear")
+                                  ? {
+                                      backgroundImage: item.colorCode,
+                                      height: "1.5em",
+                                      width: "1.5em",
+                                      borderRadius: "50%",
+                                      border: "1px solid",
+                                    }
+                                  : {
+                                      backgroundColor: item.colorCode,
+                                      height: "1.5em",
+                                      width: "1.5em",
+                                      borderRadius: "50%",
+                                      border: "1px solid",
+                                    }
+                              }
+                            ></div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </>
                 )}
               </div>
             </footer>
