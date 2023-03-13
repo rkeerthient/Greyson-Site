@@ -37,6 +37,7 @@ const ProductsListContainer = (props: any) => {
   }, [sortType]);
 
   useEffect(() => {
+    console.log(JSON.stringify(priceValues));
     if (
       !initLoad &&
       JSON.stringify(priceValues) !== JSON.stringify(tempPriceValues)

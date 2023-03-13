@@ -8,7 +8,6 @@ export const PriceRange = () => {
   let step = 1;
 
   const handleChange = (values: number[]) => {
-    setInitLoad(false);
     if (values[0] > values[1]) {
       values[0] = values[1];
     }
@@ -16,11 +15,13 @@ export const PriceRange = () => {
       values[1] = values[0];
     }
     setPriceValues(values);
+    setInitLoad(false);
   };
 
   return (
     <>
-      {
+    
+      {priceValues && (
         <div style={{ width: "100%", maxWidth: "90%" }}>
           <div className="mb-8 text-gray-900 text-sm font-medium text-left">
             Price
@@ -98,7 +99,7 @@ export const PriceRange = () => {
             </div>
           </div>
         </div>
-      }
+      )}
     </>
   );
 };

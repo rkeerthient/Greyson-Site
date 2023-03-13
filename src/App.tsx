@@ -14,11 +14,11 @@ searcher.setSessionTrackingEnabled(true);
 export default function App() {
   return (
     <SearchHeadlessProvider searcher={searcher}>
-      {/* <CartProvider> */}
-      <PageViewContextProvider>
-        <PageRouter Layout={StandardLayout} routes={routeConfig} />
-      </PageViewContextProvider>
-      {/* </CartProvider> */}
+      <CartProvider>
+        <PageViewContextProvider>
+          <PageRouter Layout={StandardLayout} routes={routeConfig} />
+        </PageViewContextProvider>
+      </CartProvider>
     </SearchHeadlessProvider>
   );
 }

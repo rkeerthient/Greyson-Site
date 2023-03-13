@@ -5,92 +5,40 @@ import styled from "styled-components";
 import { useProductsContext } from "../../context/ProductsContext";
 import { CardProps } from "../../models/cardComponent";
 
-//prettier-ignore
-export interface ProductCardConfig {
-  showOrdinal?: boolean
-}
-
-//prettier-ignore
-export interface ProductCardProps extends CardProps {
-  configuration: ProductCardConfig 
-}
-export interface Root {
-  rawData: RawData;
-  source: string;
-  index: number;
-  name: string;
-  id: string;
-  highlightedFields: HighlightedFields;
-  entityType: string;
-}
-
-export interface RawData {
-  id: string;
-  type: string;
-  landingPageUrl: string;
-  savedFilters: string[];
-  primaryPhoto: PrimaryPhoto;
-  name: string;
-  c_cCategory: string[];
-  c_color: string[];
-  c_department: string;
-  c_fabric: string[];
-  c_fit: string[];
-  c_price: string[];
-  c_primaryCTA: CPrimaryCta;
-  c_productCategory: string[];
-  c_size: string[];
-  c_sleeveLength: string[];
-  c_subtitle: string[];
-  c_type: string[];
-  uid: string;
-}
-
-export interface PrimaryPhoto {
-  image: Image;
-}
-
-export interface Image {
-  url: string;
-  width: number;
-  height: number;
-  sourceUrl: string;
-  thumbnails: Thumbnail[];
-}
-
-export interface Thumbnail {
-  url: string;
-  width: number;
-  height: number;
-}
-
-export interface CPrimaryCta {
-  label: string;
-  linkType: string;
-  link: string;
-}
-
-export interface HighlightedFields {}
-
 export function ProductCard(props: any): JSX.Element {
   const [variant, setVariant] = useState();
   const [currImg, setCurrImg] = useState();
   const { result } = props;
   const { setProdId, setIsModalOpen } = useProductsContext();
+  const [colors, setColors] = useState<any[]>([]);
+  const [currColor, setCurrColor] = useState(0);
   const [resData, setResData] = useState(result.rawData) as unknown as any;
-  const updateVariant = async (id: any) => {
-    try {
-      const response = await fetch(
-        `https://streams.yext.com/v2/accounts/me/api/allProducts?api_key=492b4f850dc811953f9419b7574ca389&v=20220101&id=${id}`
-      );
 
-      const responseJson = await response.json();
-      console.log(JSON.stringify(responseJson.response));
-      setResData(await responseJson.response.docs[0]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  useEffect(() => {
+    let nArray: any = [];
+    nArray.push({
+      id: result.id,
+      photoGallery: resData.photoGallery,
+      colorCode: resData.c_colorCode,
+      oldPrice: resData.c_oldPrice ? resData.c_oldPrice.value : 0,
+      price: resData.price ? resData.price.value : 0,
+    });
+
+    resData.c_colorToProd &&
+      resData.c_colorToProd.map(
+        (item: any) =>
+          item.c_colorCode &&
+          nArray.push({
+            id: item.id,
+            photoGallery: item.photoGallery,
+            colorCode: item.c_colorCode,
+            oldPrice: item.c_oldPrice ? item.c_oldPrice.value : 0,
+            price: item.price ? item.price.value : 0,
+          })
+      );
+    !colors && setColors([...colors, ...nArray]);
+  }, [result]);
+
   const { isGrid } = useProductsContext();
 
   return isGrid ? (
@@ -108,46 +56,43 @@ export function ProductCard(props: any): JSX.Element {
               <div className="flex flex-col gap-2">
                 <h5>{result.name}</h5>
                 <p>${resData.price.value}</p>
-                <ul style={{ display: "flex", gap: "0.5em" }}>
-                  <li
-                    key={result.id}
-                    onClick={() => updateVariant(result.id)}
-                    style={{
-                      backgroundColor: resData.color,
-                      height: "1.5em",
-                      width: "1.5em",
-                      borderRadius: "50%",
-                      border: "1px solid",
-                    }}
-                  ></li>
-
-                  {resData.c_productVariants &&
-                    resData.c_productVariants.map((item: any, index: any) => {
+                {colors && (
+                  <ul style={{ display: "flex", gap: "0.5em" }}>
+                    {colors.map((item: any, index: number) => {
                       return (
                         <li
                           key={item.id}
-                          onClick={() => updateVariant(item.id)}
-                          style={
-                            item.c_colorCode.includes("linear")
-                              ? {
-                                  backgroundImage: item.c_colorCode,
-                                  height: "1.5em",
-                                  width: "1.5em",
-                                  borderRadius: "50%",
-                                  border: "1px solid",
-                                }
-                              : {
-                                  backgroundColor: item.c_colorCode,
-                                  height: "1.5em",
-                                  width: "1.5em",
-                                  borderRadius: "50%",
-                                  border: "1px solid",
-                                }
-                          }
-                        ></li>
+                          className={`${
+                            currColor === index
+                              ? "color-btn active"
+                              : "color-btn"
+                          }`}
+                          onClick={() => setCurrColor(index)}
+                        >
+                          <div
+                            style={
+                              item.colorCode.includes("linear")
+                                ? {
+                                    backgroundImage: item.colorCode,
+                                    height: "1.5em",
+                                    width: "1.5em",
+                                    borderRadius: "50%",
+                                    border: "1px solid",
+                                  }
+                                : {
+                                    backgroundColor: item.colorCode,
+                                    height: "1.5em",
+                                    width: "1.5em",
+                                    borderRadius: "50%",
+                                    border: "1px solid",
+                                  }
+                            }
+                          ></div>
+                        </li>
                       );
                     })}
-                </ul>
+                  </ul>
+                )}
               </div>
             </footer>
           </div>
