@@ -37,11 +37,7 @@ const ProductsListContainer = (props: any) => {
   }, [sortType]);
 
   useEffect(() => {
-    console.log(JSON.stringify(priceValues));
-    if (
-      !initLoad &&
-      JSON.stringify(priceValues) !== JSON.stringify(tempPriceValues)
-    ) {
+    if (!initLoad && JSON.stringify(priceValues)) {
       const selectedFilters: SelectableStaticFilter[] = [];
       const priceFilter = getPriceRange();
       priceFilter && selectedFilters.push(priceFilter);
