@@ -99,6 +99,12 @@ const FacetsSection = () => {
                   defaultExpanded: true,
                   showFacet: true,
                 },
+                c_additionalFeatures: {
+                  label: "Features",
+                  collapsible: true,
+                  defaultExpanded: true,
+                  showFacet: true,
+                },
                 color: {
                   label: "Colors",
                   collapsible: true,

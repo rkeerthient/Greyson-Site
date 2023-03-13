@@ -107,6 +107,28 @@ const SingleProductPage = () => {
       num: [30, 31, 32, 33, 34, 35, 36, 38, 40],
     },
   ]);
+
+  const addFeatures: any = {
+    QUICK_DRY:
+      "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/quick_dry.png?v=1660166389&width=112",
+    ANTIMICROBIAL:
+      "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/anti-microbial_a52cc90e-46c3-491a-87f5-82e29d11aab8.png?v=1660166389&width=112",
+    GREYSON_TRADEMARK:
+      "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/GTM.webp?v=1660245960&width=112",
+    ANTIFADE:
+      "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/antifade_2x_453559aa-e28c-4629-9150-5921fca15ad2.png?v=1652421556&width=112",
+    STRETCH:
+      "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/stretch_51e0f8be-75a8-47c7-8406-2583569a23c9.png?v=1660166389&width=112",
+    COOLING_TECHNOLOGY:
+      "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/cooling_ab5419d4-9583-418d-891b-b19cf5dd2187.png?v=1660166389&width=112",
+
+    UV_AB:
+      "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/uv_ab.png?v=1660166389&width=112",
+
+    WATER_RESISTANT:
+      "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/water-resistant.png?v=1660245971&width=112",
+  };
+
   const fetchProduct = async () => {
     setIsLoading(true);
     try {
@@ -241,7 +263,7 @@ const SingleProductPage = () => {
                   <div
                     className="flex"
                     style={{
-                      gap: "2em",
+                      gap: "0.6em",
                       textTransform: "uppercase",
                       marginTop: "1em",
                     }}
@@ -249,35 +271,38 @@ const SingleProductPage = () => {
                     {isNaN(parseInt(data.size.split(",")[0]))
                       ? sizeTypes[0].txt?.map((item: any, index: number) =>
                           data.size.split(",").includes(item) ? (
-                            <div style={{ margin: "0 1rem 1rem 0;" }}>
-                              <span
+                            <div className="size">{item}</div>
+                          ) : (
+                            <div className="size notAvailable">
+                              <div
                                 style={{
-                                  lineHeight: 1,
-                                  minWidth: "4.6rem",
-                                  minHeight: "4.6rem",
-                                  padding: "0.5rem 1rem 0",
-                                  border: "0.1rem solid black",
+                                  position: "absolute",
+                                  top: 0,
+                                  background: "#ccc",
+                                  color: "black",
+                                  fontSize: "8px",
+                                  width: "100%",
                                 }}
                               >
-                                {item}
-                              </span>
+                                Notify me
+                              </div>
+                              <div>{item}</div>
                             </div>
-                          ) : (
-                            <span
-                              style={{
-                                lineHeight: 1,
-                                minWidth: "4.6rem",
-                                minHeight: "4.6rem",
-                                padding: "0.5rem 1rem 0",
-                                border: "0.1rem solid black",
-                              }}
-                              className="notAvailable"
-                            >
-                              {item}
-                            </span>
                           )
                         )
                       : "Number"}
+                  </div>
+                  <div className="product__icons">
+                    {addFeatures &&
+                      data.c_additionalFeatures.map((item: any, index: any) => (
+                        <div key={index} className="product__icon">
+                          <img
+                            src={addFeatures[item.replace(" ", "_")]}
+                            alt=""
+                          />
+                          <span>{item}</span>
+                        </div>
+                      ))}
                   </div>
                 </section>
               </div>
@@ -333,6 +358,57 @@ const Wrapper = styled.main`
       font-size: 1.25rem;
     }
   }
+  .product__icons {
+    text-align: center;
+    background-color: #f8f8f8;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0.4rem 1.5rem;
+    border-top: 0.1rem solid #ccc;
+    margin-top: 1.2rem;
+    font-size: 1.4rem;
+  }
+  .product__icon {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .product__icons > * {
+    width: 100%;
+    max-width: 25%;
+  }
+  .product__icons img {
+    max-width: 4rem;
+    min-height: 4rem;
+    margin: 0 auto;
+  }
+  .product__icons span {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .size {
+    display: flex;
+    line-height: 1;
+    border: 0.1rem solid black;
+    font-size: 18px;
+    height: 56px;
+    width: 56px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .notAvailable {
+    color: #ccc;
+    border-color: #ccc;
+    position: relative;
+  }
 `;
 
 const CartWrapper = styled.section`
@@ -378,6 +454,17 @@ const CartWrapper = styled.section`
   .btn {
     margin-top: 1rem;
     width: 140px;
+  }
+  addfeatures: {
+    text-align: center;
+    background-color: var(--color-light-f8);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0.4rem 1.5rem;
+    border-top: 0.1rem solid var(--color-light-c);
+    margin-top: 1.2rem;
   }
 `;
 

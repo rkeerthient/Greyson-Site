@@ -189,4 +189,13 @@ const Wrapper = styled.article`
     color: var(--clr-primary-5);
     letter-spacing: var(--spacing);
   }
+  .active {
+    border-radius: 50%;
+    border: 1px solid var(--clr-primary-5) !important;
+    padding: 0.25em;
+  }
+  ul {
+    margin-top: 1em;
+    align-items: center;
+  }
 `;
