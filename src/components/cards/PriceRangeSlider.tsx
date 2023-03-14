@@ -1,4 +1,4 @@
-import Slider from "@material-ui/core/Slider";
+import Slider from "@mui/material/Slider";
 import { useState } from "react";
 import { useProductsContext } from "../../context/ProductsContext";
 const PriceRangeSlider = ({ min, max }: any) => {
