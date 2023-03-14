@@ -80,7 +80,7 @@ interface Meta2 {
 
 const FeaturedProducts = () => {
   const [data, setData] = useState<any | null>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchFeaturedProducts = async () => {
     setIsLoading(true);
@@ -89,9 +89,11 @@ const FeaturedProducts = () => {
         `https://liveapi.yext.com/v2/accounts/me/entities?api_key=492b4f850dc811953f9419b7574ca389&v=20220101&entityTypes=product&filter={"c_featuredProduct": {"$eq": true}}`
       );
       const responseJson = await responseData.json();
- 
-      setIsLoading(false);
+
       setData(await responseJson.response);
+      console.log(JSON.stringify(responseJson.response));
+
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       setIsLoading(false);
@@ -102,7 +104,7 @@ const FeaturedProducts = () => {
     fetchFeaturedProducts();
   }, []);
 
-  if (isLoading && !data) {
+  if (isLoading) {
     return <Loading />;
   } else {
     return (
@@ -112,22 +114,23 @@ const FeaturedProducts = () => {
           <div className="underline"></div>
         </div>
         <div className="section-center featured">
-          {data.entities.map((item: any, index: any) => (
-            <WrapperProd key={index}>
-              <div className="container">
-                {item.photoGallery && (
-                  <img src={item.photoGallery[0].image.url} alt="" />
-                )}
-                <Link to={`/product/${item.meta.id}`} className="link">
-                  <FaSearch />
-                </Link>
-              </div>
-              <footer>
-                <h5>{item.name}</h5>
-                {/* <p>{item.c_price}</p> */}
-              </footer>
-            </WrapperProd>
-          ))}
+          {data.entities &&
+            data.entities.map((item: any, index: any) => (
+              <WrapperProd key={index}>
+                <div className="container">
+                  {item.photoGallery && (
+                    <img src={item.photoGallery[0].image.url} alt="" />
+                  )}
+                  <Link to={`/product/${item.meta.id}`} className="link">
+                    <FaSearch />
+                  </Link>
+                </div>
+                <footer>
+                  <h5>{item.name}</h5>
+                  {/* <p>{item.c_price}</p> */}
+                </footer>
+              </WrapperProd>
+            ))}
         </div>
         <Link to="/products" className="btn">
           all products
@@ -164,7 +167,7 @@ const Wrapper = styled.section`
 const WrapperProd = styled.article`
   .container {
     position: relative;
-    background: var(--clr-black);
+    background: #ced7e4;
     border-radius: var(--radius);
   }
   img {

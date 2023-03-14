@@ -337,6 +337,7 @@ const SingleProductPage = () => {
                   </div>
                   <div className="product__icons">
                     {addFeatures &&
+                      data.c_additionalFeatures &&
                       data.c_additionalFeatures.map((item: any, index: any) => (
                         <div key={index} className="product__icon">
                           <img

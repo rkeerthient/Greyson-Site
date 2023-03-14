@@ -18,7 +18,7 @@ const Hero = () => {
       </article>
       <article className="img-container">
         <img
-          src="https://i.shgcdn.com/ab661ebf-bd09-40e0-b133-41f82f0c8368/-/format/auto/-/preview/3000x3000/-/quality/lighter/"
+          src="https://cdn.shopify.com/s/files/1/0041/1018/8642/files/JT_8b561b3d-44fd-4d37-8409-76e35d259f7a.jpg?v=1678127285"
           alt="nice table"
           className="main-img"
         />
@@ -62,7 +62,7 @@ const Wrapper = styled.section`
     }
     .main-img {
       width: 100%;
-      height: 550px;
+      height: 500px;
       position: relative;
       border-radius: var(--radius);
       display: block;
@@ -81,7 +81,7 @@ const Wrapper = styled.section`
       position: absolute;
       width: 10%;
       height: 80%;
-      background: var(--clr-primary-9);
+      background: #ced7e4;
       bottom: 0%;
       left: -8%;
       border-radius: var(--radius);

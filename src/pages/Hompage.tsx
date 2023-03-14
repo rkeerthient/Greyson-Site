@@ -7,7 +7,7 @@ const Homepage = () => {
   return (
     <main>
       <Hero />
-      {/* <FeaturedProducts /> */}
+      <FeaturedProducts />
       <CategoriesGrid />
       <Contact />
     </main>
