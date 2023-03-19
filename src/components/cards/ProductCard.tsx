@@ -48,15 +48,42 @@ export function ProductCard(props: any): JSX.Element {
         <Wrapper>
           <div>
             <div className="container">
-              <img src={colors[currColor].photoGallery[0].image.url} alt="" />
-              <Link to={`/product/${result.id}`} className="link">
-                <FaEye />
-              </Link>
+              {colors.map((item: any, index: any) => (
+                <span
+                  key={index}
+                  style={{
+                    display: `${currColor === index ? "block" : "none"}`,
+                  }}
+                >
+                  <img
+                    src={colors[currColor].photoGallery[0].image.url}
+                    alt=""
+                  />
+                  <Link to={`/product/${result.id}`} className="link">
+                    <FaEye />
+                  </Link>
+                </span>
+              ))}
             </div>
             <footer>
               <div className="flex flex-col gap-2">
                 <h5>{result.name}</h5>
-                <p>${resData.price.value}</p>
+                <p
+                  style={{
+                    textTransform: "uppercase",
+                    fontSize: "0.75em",
+                    fontWeight: 700,
+                    color: "#8d939a",
+                  }}
+                >
+                  {colors[currColor].oldPrice >= 1 && (
+                    <span>
+                      <span style={{ color: "red" }}>on sale</span> starting
+                      at&nbsp;
+                    </span>
+                  )}
+                  ${colors[currColor].price}
+                </p>
                 {colors && (
                   <>
                     <ul style={{ display: "flex", gap: "0.5em" }}>
@@ -76,15 +103,15 @@ export function ProductCard(props: any): JSX.Element {
                                 item.colorCode.includes("linear")
                                   ? {
                                       backgroundImage: item.colorCode,
-                                      height: "1.5em",
-                                      width: "1.5em",
+                                      height: "1em",
+                                      width: "1em",
                                       borderRadius: "50%",
                                       border: "1px solid",
                                     }
                                   : {
                                       backgroundColor: item.colorCode,
-                                      height: "1.5em",
-                                      width: "1.5em",
+                                      height: "1em",
+                                      width: "1em",
                                       borderRadius: "50%",
                                       border: "1px solid",
                                     }
@@ -109,7 +136,23 @@ export function ProductCard(props: any): JSX.Element {
           <img src={resData.photoGallery[0].image.url} alt="" />
           <div>
             <h4>{result.name}</h4>
-            <h5 className="price">{resData.c_price}</h5>
+            {colors.map((item: any, index: any) => (
+              <span
+                key={index}
+                style={{
+                  display: `${currColor === index ? "block" : "none"}`,
+                }}
+              >
+                <h5 className="price">
+                  {colors[currColor].oldPrice >= 1 && (
+                    <span style={{ textDecoration: "line-through" }}>
+                      {colors[currColor].oldPrice}
+                    </span>
+                  )}
+                  {colors[currColor].price}
+                </h5>
+              </span>
+            ))}
             <p>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum
               inventore illo dolore cupiditate atque iure maxime dolorum nam

@@ -9,6 +9,7 @@ import Cart from "../components/CartComponents/Cart";
 import { Markdown } from "react-showdown";
 import StarRating from "../components/starRating";
 import { FaCheck } from "react-icons/fa";
+import { dummyReviews } from "../utils/data";
 
 type ParamTypes = {
   id: string;
@@ -101,6 +102,7 @@ const SingleProductPage = () => {
   const [currColor, setCurrColor] = useState(0);
   const [prodDet, setProdDet] = useState<boolean | null>(false);
   const [care, setCare] = useState<boolean | null>(false);
+  const [selectedImage, setSelectedImage] = useState<number>(0);
   const [sizeTypes, setSizeTypes] = useState([
     {
       txt: ["s", "m", "l", "xl", "xxl", "xxxl"],
@@ -188,24 +190,66 @@ const SingleProductPage = () => {
                 back to products
               </Link>
               <div className="product-center">
-                {data.photoGallery && (
-                  <ImageWrapper>
-                    <img
-                      src={colors[currColor].photoGallery[0].image.url}
-                      className="main"
-                      alt={data.name}
-                    />
-                  </ImageWrapper>
-                )}
+                {data.photoGallery &&
+                  colors.map((item: any, index: any) => (
+                    <span
+                      key={index}
+                      style={{
+                        display: `${currColor === index ? "block" : "none"}`,
+                      }}
+                    >
+                      <ImageWrapper>
+                        <img
+                          src={
+                            colors[currColor].photoGallery[selectedImage].image
+                              .url
+                          }
+                          className="main"
+                          alt={data.name}
+                        />
+                      </ImageWrapper>
+                      <div
+                        style={{
+                          marginTop: "3em",
+                          justifyContent: "space-evenly",
+                          alignItems: "center",
+                        }}
+                        className="flex"
+                      >
+                        {item.photoGallery.map(
+                          (subItem: any, subIndex: any) => (
+                            <div
+                              key={subIndex}
+                              style={{
+                                border: `${
+                                  selectedImage === subIndex
+                                    ? "1px solid black"
+                                    : "0px"
+                                }`,
+                                cursor: "pointer",
+                              }}
+                            >
+                              <img
+                                onClick={() => setSelectedImage(subIndex)}
+                                src={subItem.image.url}
+                                alt=""
+                                style={{ width: "6em" }}
+                              />
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </span>
+                  ))}
                 <section className="content">
                   <h2>{data?.name}</h2>
                   <div className="flex" style={{ gap: "0.5em" }}>
-                    {colors[currColor].c_oldPrice && (
+                    {colors[currColor].oldPrice >= 1 && (
                       <h5
                         className="price "
                         style={{ textDecoration: "line-through" }}
                       >
-                        ${colors[currColor].c_oldPrice}
+                        ${colors[currColor].oldPrice}
                       </h5>
                     )}
                     {colors[currColor] && (
@@ -236,7 +280,10 @@ const SingleProductPage = () => {
                                   ? "color-btn active"
                                   : "color-btn"
                               }`}
-                              onClick={() => setCurrColor(index)}
+                              onClick={() => {
+                                setCurrColor(index);
+                                setSelectedImage(0);
+                              }}
                             >
                               <div
                                 style={
@@ -372,7 +419,7 @@ const SingleProductPage = () => {
                           style={{
                             marginTop: "1em",
                             fontSize: "14px",
-                            color: "#ccc",
+                            color: "#6f6f6f",
                           }}
                         >
                           The Comanche Hybrid golf vest is the perfect blend of
@@ -410,7 +457,7 @@ const SingleProductPage = () => {
                           style={{
                             marginTop: "1em",
                             fontSize: "14px",
-                            color: "#ccc",
+                            color: "#6f6f6f",
                           }}
                         >
                           Wash In 40 Degree | Wash With Similar Colors | Do Not
@@ -420,6 +467,30 @@ const SingleProductPage = () => {
                     </div>
                   </div>
                 </section>
+              </div>
+              <div style={{ marginTop: "2em" }}>
+                {dummyReviews.reviews.map((item: any, index: number) => (
+                  <div
+                    key={index}
+                    style={{
+                      padding: "2em",
+                      borderBottom: " 1px solid gray",
+                    }}
+                  >
+                    <div
+                      className="flex"
+                      style={{ justifyContent: "space-between" }}
+                    >
+                      <div>{item.user}</div>
+                      <div>{item.date}</div>
+                    </div>
+                    <StarRating selectedStars={item.rating} />
+                    <div style={{ fontSize: `1.5em`, fontWeight: "400" }}>
+                      {item.title}
+                    </div>
+                    <div style={{ color: "#6f6f6f" }}>{item.comment}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </Wrapper>

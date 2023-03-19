@@ -15,7 +15,6 @@
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.43",
     "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.25",
     "@yext/search-headless-react": "^2.1.0",
     "@yext/search-ui-react": "^1.1.0",
@@ -66,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-dom": "^18.0.11",
     "tailwindcss": "^3.2.7"
   }
 }
