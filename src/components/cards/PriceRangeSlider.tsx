@@ -18,41 +18,6 @@ const PriceRangeSlider = () => {
     setInitLoad(false);
   }, [tempPriceValues, priceValues]);
   return (
-    // <>
-    //   {value && range && (
-    //     <>
-    //       <div className="mb-4 font-bold">Price range</div>
-    //       <div
-    //         style={{
-    //           margin: "auto",
-    //           display: "block",
-    //           width: "85%",
-    //         }}
-    //       >
-    //         <Slider
-    //           value={value}
-    //           min={range[0]}
-    //           max={range[1]}
-    //           onChange={rangeSelector}
-    //           valueLabelDisplay="auto"
-    //         />
-    //         <div
-    //           style={{
-    //             width: "85%",
-    //             display: "flex",
-    //             justifyContent: "space-between",
-    //           }}
-    //         >
-    //           <div>
-    //             ${value[0]}</div>
-    //           <div>-</div>
-    //           <div>${value[1]}</div>
-    //         </div>
-    //       </div>
-    //     </>
-    //   )}
-    // </>
-
     <>
       {value && range && (
         <>

@@ -91,7 +91,6 @@ const FeaturedProducts = () => {
       const responseJson = await responseData.json();
 
       setData(await responseJson.response);
-      console.log(JSON.stringify(responseJson.response));
 
       setIsLoading(false);
     } catch (err) {
