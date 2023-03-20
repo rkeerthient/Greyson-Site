@@ -29,6 +29,7 @@ const ProductsListContainer = (props: any) => {
     setInitLoad,
   } = useProductsContext();
   const answersActions = useSearchActions();
+
   useEffect(() => {
     if (sortType) {
       sortType && answersActions.setSortBys([sortType]);

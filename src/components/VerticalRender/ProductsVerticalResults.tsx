@@ -103,7 +103,6 @@ export default function ProductsVerticalResults(
   props: VerticalResultsProps
 ): JSX.Element | null {
   const { displayAllResults = true, ...otherProps } = props;
-
   const verticalResults =
     useSearchState((state) => state.vertical.results) || [];
   const allResultsForVertical =

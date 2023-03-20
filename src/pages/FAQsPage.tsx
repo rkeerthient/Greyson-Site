@@ -16,7 +16,6 @@ import {
 } from "@yext/search-ui-react";
 export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
-
   const facetConfig = {
     c_cCategory: {
       label: "Category",

@@ -16,6 +16,8 @@ export const ProductsProvider = ({
   const [priceValues, setPriceValues] = useState<number[]>([]);
   const [tempPriceValues, setTempPriceValues] = useState<number[]>([]);
   const [initLoad, setInitLoad] = useState(true);
+  const [custLoad, setCustLoad] = useState(false);
+  const [promoData, setPromoData] = useState();
   return (
     <ProductsContext.Provider
       value={{
@@ -39,6 +41,11 @@ export const ProductsProvider = ({
         setInitLoad,
         tempPriceValues,
         setTempPriceValues,
+
+        custLoad,
+        setCustLoad,
+        promoData,
+        setPromoData,
       }}
     >
       {children}

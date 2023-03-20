@@ -57,56 +57,66 @@ const ResultCountSection = (props: any) => {
   };
 
   return (
-    <Wrapper
-      style={{
-        gridTemplateColumns: `${
-          isProducts ? "auto auto 1fr auto" : "auto 1fr auto"
-        }`,
-        alignItems: "baseline",
-      }}
-    >
-      {isProducts && (
-        <div className="btn-container">
-          <button
-            onClick={() => setIsGrid(true)}
-            className={`${isGrid ? "active" : null}`}
-          >
-            <BsFillGridFill />
-          </button>
-          <button
-            onClick={() => setIsGrid(false)}
-            className={`${!isGrid ? "active" : null}`}
-          >
-            <BsList />
-          </button>
-        </div>
-      )}
-
-      <ResultsCount />
-
-      <hr />
-      {sortOptions && isProducts && (
-        <form onSubmit={(e) => e.preventDefault()}>
-          <label htmlFor="sort">sort by</label>
-          <select
-            name="sort"
-            id="sort"
-            value={sortByLabel}
-            className="sort-input"
-            onChange={(e) => handleChange(e)}
-          >
-            <option value="">None</option>
-            {sortByOptions?.map((item: any, idx: any) => {
-              return (
-                <option key={idx} value={item.label}>
-                  {item.label}
-                </option>
-              );
-            })}
-          </select>
-        </form>
-      )}
-    </Wrapper>
+    <>
+      {" "}
+      <Wrapper
+        style={{
+          gridTemplateColumns: `${
+            isProducts ? "auto auto 1fr auto" : "auto 1fr auto"
+          }`,
+          alignItems: "baseline",
+        }}
+      >
+        {isProducts && (
+          <div className="btn-container">
+            <button
+              onClick={() => setIsGrid(true)}
+              className={`${isGrid ? "active" : null}`}
+            >
+              <BsFillGridFill />
+            </button>
+            <button
+              onClick={() => setIsGrid(false)}
+              className={`${!isGrid ? "active" : null}`}
+            >
+              <BsList />
+            </button>
+          </div>
+        )}
+        <ResultsCount />
+        <hr />
+        {sortOptions && isProducts && (
+          <>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <label htmlFor="sort">sort by</label>
+              <select
+                name="sort"
+                id="sort"
+                value={sortByLabel}
+                className="sort-input"
+                onChange={(e) => handleChange(e)}
+              >
+                <option value="">None</option>
+                {sortByOptions?.map((item: any, idx: any) => {
+                  return (
+                    <option key={idx} value={item.label}>
+                      {item.label}
+                    </option>
+                  );
+                })}
+              </select>
+            </form>
+          </>
+        )}
+      </Wrapper>
+      {/* {props.promoData && (
+        <img
+          src={props.promoData}
+          alt=""
+          style={{ marginTop: "-2em", marginBottom: "1em" }}
+        />
+      )} */}
+    </>
   );
 };
 const Wrapper = styled.section`

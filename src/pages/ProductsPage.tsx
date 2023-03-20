@@ -1,38 +1,19 @@
 import styled from "styled-components";
-import PageHero from "../components/PageHero";
-import FacetsSection from "../components/cards/FacetsSection";
-import ResultCountSection from "../components/cards/ResultCountSection";
-import ProductsListContainer from "../components/cards/ProductsListContainer";
-import FacetContent from "../components/Layouts/FacetContent";
-import MainContent from "../components/Layouts/MainContent";
-import { LocationBias, Pagination } from "@yext/search-ui-react";
-import { useLayoutEffect } from "react";
-import { useSearchActions, useSearchState } from "@yext/search-headless-react";
-import usePageSetupEffect from "../hooks/usePageSetupEffect";
+import { useProductsContext } from "../context/ProductsContext";
+import ProductsOnly from "./ProductsOnly";
+import Loading from "../components/Loading";
 
 export default function ProductsPage({ verticalKey }: { verticalKey: string }) {
-  usePageSetupEffect(verticalKey);
+  const { custLoad, promoData } = useProductsContext();
   return (
-    <div>
-      <PageHero title="Products" />
-      <Wrapper className="page">
-        <div className="section-center products">
-          <FacetContent component={<FacetsSection />} />
-          <div>
-            <MainContent
-              result={
-                <ResultCountSection isProducts={true} sortOptions={true} />
-              }
-              component={<ProductsListContainer />}
-            ></MainContent>
-          </div>
+    <>
+      {custLoad && <Loading />}
+      {!custLoad && (
+        <div>
+          <ProductsOnly verticalKey={verticalKey} promoData={promoData} />
         </div>
-      </Wrapper>
-      <div style={{ marginTop: "1em", marginBottom: "1em" }}>
-        <Pagination paginateAllOnNoResults={false}></Pagination>
-      </div>
-      <LocationBias />
-    </div>
+      )}
+    </>
   );
 }
 

@@ -1,19 +1,22 @@
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
-import { provideHeadless } from "@yext/search-headless-react";
+import { provideHeadless, useSearchActions } from "@yext/search-headless-react";
 import { FaBars } from "react-icons/fa";
 import {
   DropdownItem,
+  executeSearch,
   SearchBar,
   VisualAutocompleteConfig,
 } from "@yext/search-ui-react";
 import { answersHeadlessConfig } from "../config/answersHeadlessConfig";
 import { useEffect, useState } from "react";
 import CartIcon from "./CartComponents/CartIcon";
+import { useProductsContext } from "../context/ProductsContext";
 
 const Navigation = ({ links }: any) => {
+  const { setCustLoad, setPromoData } = useProductsContext();
   const [vertKey, setVertKey] = useState("");
-
+  const searchActions = useSearchActions();
   const visualAutocompleteConfig: VisualAutocompleteConfig = {
     entityPreviewSearcher: provideHeadless({
       ...answersHeadlessConfig,
@@ -59,6 +62,36 @@ const Navigation = ({ links }: any) => {
     setVertKey(window.location.pathname);
   }, [window.location.href]);
 
+  const onSearch = async (searchEventData: { query?: string }) => {
+    const { query } = searchEventData;
+    console.log("inn");
+    if (query?.length) {
+      console.log("inn");
+      setCustLoad(true);
+      searchActions.setQuery(query);
+      searchActions.setUniversal();
+      searchActions
+        .executeUniversalQuery()
+        .then((res) =>
+          res?.verticalResults[0].verticalKey === "promo"
+            ? setPromoData(
+                res?.verticalResults[0].results.map((item: any) => {
+                  return item.rawData.primaryPhoto.image.url;
+                })
+              )
+            : setPromoData("")
+        )
+        .then(() => setCustLoad(false));
+    } else {
+      console.log("b2");
+      setCustLoad(true);
+      searchActions.setVertical("products");
+      searchActions.executeVerticalQuery();
+      await new Promise((r) => setTimeout(r, 200));
+      setPromoData("");
+      setCustLoad(false);
+    }
+  };
   return (
     <NavContainer>
       <div className="nav-center">
@@ -110,6 +143,7 @@ const Navigation = ({ links }: any) => {
               recentSearchesOption: "hidden",
               icon: "none",
             }}
+            onSearch={onSearch}
           />
         )}
         <CartIcon />
