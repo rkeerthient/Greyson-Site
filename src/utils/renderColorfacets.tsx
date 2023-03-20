@@ -22,14 +22,16 @@ export default function renderColorFacets({
   return (
     <div
       id={option.id}
-      className={`${selected ? "color-facets active" : "color-facets"}`}
-      style={{
-        backgroundColor: `${color}`,
-      }}
+      className={`${selected ? "color-btn active" : "color-btn"}`}
       key={option.id}
       onClick={() => onClick(true)}
     >
-      {selected ? <FaCheck /> : null}
+      <div
+        className="color-facets"
+        style={{
+          backgroundColor: `${color}`,
+        }}
+      ></div>
     </div>
   );
 }

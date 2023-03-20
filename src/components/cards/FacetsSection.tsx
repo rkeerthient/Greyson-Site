@@ -17,18 +17,6 @@ import { NumericalFacets, StandardFacets } from "@yext/search-ui-react";
 import PriceRangeSlider from "./PriceRangeSlider";
 
 const FacetsSection = () => {
-  const facetConfig = {
-    c_department: {
-      label: "Department",
-      showFacet: true,
-    },
-    c_category: {
-      label: "Category",
-      collapsible: true,
-      defaultExpanded: true,
-      showFacet: true,
-    },
-  };
   const answersActions = useSearchActions();
   const { priceValues, setPriceValues } = useProductsContext();
 
