@@ -86,7 +86,7 @@ const FacetsSection = () => {
       {priceValues[0] && priceValues[1] && (
         <div className="content">
           <FilterDisplayManager>
-            <PriceRangeSlider min={priceValues[0]} max={priceValues[1]} />
+            <PriceRangeSlider />
             <Divider />
             <Facets
               cssCompositionMethod="assign"

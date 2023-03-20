@@ -26,6 +26,7 @@ const ProductsListContainer = (props: any) => {
     setTempPriceValues,
     tempPriceValues,
     setPriceValues,
+    setInitLoad,
   } = useProductsContext();
   const answersActions = useSearchActions();
   useEffect(() => {
@@ -37,7 +38,10 @@ const ProductsListContainer = (props: any) => {
   }, [sortType]);
 
   useEffect(() => {
-    if (!initLoad && JSON.stringify(priceValues)) {
+    if (
+      !initLoad &&
+      JSON.stringify(priceValues) !== JSON.stringify(tempPriceValues)
+    ) {
       const selectedFilters: SelectableStaticFilter[] = [];
       const priceFilter = getPriceRange();
       priceFilter && selectedFilters.push(priceFilter);

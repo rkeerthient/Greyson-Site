@@ -1,17 +1,21 @@
 import Slider from "@mui/material/Slider";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useProductsContext } from "../../context/ProductsContext";
-const PriceRangeSlider = ({ min, max }: any) => {
-  const { setPriceValues, setInitLoad } = useProductsContext();
+const PriceRangeSlider = () => {
+  const { setPriceValues, priceValues, tempPriceValues, setInitLoad } =
+    useProductsContext();
 
-  const [value, setValue] = useState([min, max]);
-  const [range, setRange] = useState([min, max]);
+  const [value, setValue] = useState([]);
+  const [range, setRange] = useState([]);
   const rangeSelector = (event: any, newValue: any) => {
     setValue(newValue);
     setPriceValues(newValue);
     setInitLoad(false);
   };
-
+  useEffect(() => {
+    setValue(priceValues);
+    setRange(tempPriceValues);
+  }, [tempPriceValues, priceValues]);
   return (
     <>
       {value && range && (
