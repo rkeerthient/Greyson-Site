@@ -10,6 +10,7 @@ import { Markdown } from "react-showdown";
 import StarRating from "../components/starRating";
 import { FaCheck } from "react-icons/fa";
 import { dummyReviews } from "../utils/data";
+import { margin } from "@mui/system";
 
 type ParamTypes = {
   id: string;
@@ -469,6 +470,31 @@ const SingleProductPage = () => {
                 </section>
               </div>
               <div style={{ marginTop: "2em" }}>
+                <hr />
+                <div style={{ marginBottom: "1em", marginTop: "1em" }}>
+                  <span
+                    style={{
+                      marginBottom: "1em",
+                      fontSize: "1.5em",
+                      fontWeight: "400",
+                    }}
+                  >
+                    CUSTOMER REVIEWS
+                    <br />
+                    <br />
+                  </span>
+                  <hr />
+                  <p
+                    className=" text-gray-700"
+                    style={{ fontSize: "1.5em", marginTop: "1em" }}
+                  >
+                    <StarRating selectedStars={data.c_stars} />
+                    <span style={{ marginLeft: "0.5em", fontSize: " 14px" }}>
+                      {data.c_reviewsCount} REVIEWS
+                    </span>
+                  </p>
+                  <hr />
+                </div>
                 {dummyReviews.reviews.map((item: any, index: number) => (
                   <div
                     key={index}
