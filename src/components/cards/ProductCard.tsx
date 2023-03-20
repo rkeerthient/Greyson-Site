@@ -145,11 +145,12 @@ export function ProductCard(props: any): JSX.Element {
               >
                 <h5 className="price">
                   {colors[currColor].oldPrice >= 1 && (
-                    <span style={{ textDecoration: "line-through" }}>
-                      {colors[currColor].oldPrice}
+                    <span>
+                      <span style={{ color: "red" }}>on sale</span> starting
+                      at&nbsp;
                     </span>
                   )}
-                  {colors[currColor].price}
+                  ${colors[currColor].price}
                 </h5>
               </span>
             ))}
@@ -158,15 +159,7 @@ export function ProductCard(props: any): JSX.Element {
               inventore illo dolore cupiditate atque iure maxime dolorum nam
               architecto magni.
             </p>
-            <button
-              className="btn"
-              onClick={() => {
-                setProdId(result.id);
-                setIsModalOpen(true);
-              }}
-            >
-              Details
-            </button>
+
             <Link to={`/product/${result.id}`} className="btn">
               Details
             </Link>
