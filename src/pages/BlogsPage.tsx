@@ -17,7 +17,6 @@ import BlogsCard from "../components/cards/BlogsCard";
 export default function BlogsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
   let showAllFacets = false;
-
   return (
     <>
       {/* <PageHero title="Jobs" /> */}

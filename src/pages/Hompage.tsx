@@ -1,15 +1,126 @@
+import { useSearchActions, useSearchState } from "@yext/search-headless-react";
+import {
+  StandardCard,
+  StandardSection,
+  UniversalResults,
+} from "@yext/search-ui-react";
+import { NavLink } from "react-router-dom";
+import { ProductCard } from "../components/cards/ProductCard";
+import { FAQCard } from "../components/FAQCard";
 import CategoriesGrid from "../components/HompageComponents/CategoriesGrid";
 import Contact from "../components/HompageComponents/Contact";
 import FeaturedProducts from "../components/HompageComponents/FeaturedProducts";
 import Hero from "../components/HompageComponents/Hero";
+import usePageSetupEffect from "../hooks/usePageSetupEffect";
 
 const Homepage = () => {
+  usePageSetupEffect();
+  const isLoading =
+    useSearchState((state) => state.searchStatus.isLoading) || false;
+  const queryString = useSearchState((state) => state.query.input);
+  const GridSection = ({ results, CardComponent, header }: any) => {
+    return (
+      <>
+        <div className="flex flex-col space-y-2 univ">
+          <div className="flex justify-between">
+            <div className="font-semibold px-32">{header.props.label}</div>
+            <NavLink
+              end
+              to={`/${header.props.label.toLowerCase()}`}
+              className="hover:underline "
+              style={{ color: "blue" }}
+            >
+              View All
+            </NavLink>
+          </div>
+          <div
+            style={{
+              marginTop: "2em",
+              display: "grid",
+              gridTemplateColumns: "auto auto auto auto",
+              gap: "2em",
+            }}
+          >
+            {results.map((item: any) => (
+              <ProductCard result={item} />
+            ))}
+          </div>
+        </div>
+        <hr />
+      </>
+    );
+  };
+  const FAQSection = ({ results, CardComponent, header }: any) => {
+    return (
+      <>
+        <div className="flex flex-col  univ">
+          <div className="flex justify-between">
+            <div className="font-semibold px-32">{header.props.label}</div>
+            <NavLink
+              end
+              to={`/${header.props.label.toLowerCase()}`}
+              className="hover:underline "
+              style={{ color: "blue" }}
+            >
+              View All
+            </NavLink>
+          </div>
+          {/* <div className="font-semibold px-32">{header.props.label}</div>
+
+          <NavLink
+            end
+            to={`/${header.props.label.toLowerCase()}`}
+            className="hover:underline  "
+            style={{ color: "blue" }}
+          >
+            View All
+          </NavLink> */}
+          <div
+            style={{
+              marginTop: "2em",
+            }}
+          >
+            {results.map((item: any) => (
+              <FAQCard result={item} />
+            ))}
+          </div>
+        </div>
+        <hr />
+      </>
+    );
+    // <div>
+    //   {results.map((item: any) => (
+    //     <FAQCard result={item} />
+    //   ))}
+    // </div>
+  };
   return (
     <main>
-      <Hero />
-      <FeaturedProducts />
-      <CategoriesGrid />
-      <Contact />
+      {queryString ? (
+        <UniversalResults
+          customCssClasses={{ universalResultsContainer: "univPadding" }}
+          verticalConfigMap={{
+            color_variants: {},
+            products: {
+              CardComponent: StandardCard,
+              SectionComponent: GridSection,
+              label: "Products",
+            },
+            faqs: {
+              CardComponent: StandardCard,
+              SectionComponent: FAQSection,
+              label: "FAQs",
+            },
+          }}
+        />
+      ) : (
+        <>
+          <Hero />
+          <FeaturedProducts />
+          <CategoriesGrid />
+          <Contact />
+        </>
+      )}
     </main>
   );
 };

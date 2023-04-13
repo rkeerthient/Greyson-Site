@@ -9,8 +9,6 @@ import { LocationBias, Pagination } from "@yext/search-ui-react";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
 
 export default function ProductsOnly({ verticalKey, promoData }: any) {
-  console.log(JSON.stringify(verticalKey));
-
   usePageSetupEffect(verticalKey);
 
   return (

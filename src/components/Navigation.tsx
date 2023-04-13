@@ -59,14 +59,18 @@ const Navigation = ({ links }: any) => {
     },
   };
   useEffect(() => {
-    setVertKey(window.location.pathname);
+    window.location.pathname
+      ? setVertKey(window.location.pathname)
+      : setVertKey("");
   }, [window.location.href]);
 
   const onSearch = async (searchEventData: { query?: string }) => {
     const { query } = searchEventData;
-    console.log("inn");
-    if (query?.length) {
-      console.log("inn");
+    if (vertKey === "/") {
+      query && searchActions.setQuery(query);
+      searchActions.setUniversal();
+      searchActions.executeUniversalQuery().then((res) => console.log(res));
+    } else if (query?.length) {
       setCustLoad(true);
       searchActions.setQuery(query);
       searchActions.setUniversal();
@@ -124,16 +128,13 @@ const Navigation = ({ links }: any) => {
           </button>
         </div>
         {vertKey !== "/products" ? (
-          vertKey !== "/" ? (
-            <SearchBar
-              placeholder="search"
-              customCssClasses={{
-                searchBarContainer: "overrideContainer",
-              }}
-            />
-          ) : (
-            ""
-          )
+          <SearchBar
+            placeholder="search"
+            customCssClasses={{
+              searchBarContainer: "overrideContainer",
+            }}
+            onSearch={onSearch}
+          />
         ) : (
           <SearchBar
             visualAutocompleteConfig={visualAutocompleteConfig}
