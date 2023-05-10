@@ -9,8 +9,7 @@ export function ProductCard(props: any): JSX.Element {
   const [variant, setVariant] = useState();
   const [currImg, setCurrImg] = useState();
   const { result } = props;
-  console.log(JSON.stringify(result));
-
+ 
   const { setProdId, setIsModalOpen } = useProductsContext();
   const [colors, setColors] = useState<any[]>([]);
   const [currColor, setCurrColor] = useState(0);

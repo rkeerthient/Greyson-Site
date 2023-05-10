@@ -87,8 +87,7 @@ const Navigation = ({ links }: any) => {
         )
         .then(() => setCustLoad(false));
     } else {
-      console.log("b2");
-      setCustLoad(true);
+       setCustLoad(true);
       searchActions.setVertical("products");
       searchActions.executeVerticalQuery();
       await new Promise((r) => setTimeout(r, 200));

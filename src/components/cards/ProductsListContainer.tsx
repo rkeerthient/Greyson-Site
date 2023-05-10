@@ -101,8 +101,7 @@ const ProductsListContainer = (props: any) => {
   }, [filterState]);
 
   useEffect(() => {
-    console.log(JSON.stringify(resultList));
-
+ 
     isLoading && setSchemaData([]);
     !isLoading && setSchemaData(resultList);
   }, [isLoading]);
