@@ -30,6 +30,9 @@ export default function usePageSetupEffect(verticalKey?: string) {
     verticalKey
       ? answersActions.setVertical(verticalKey)
       : answersActions.setUniversal();
+    verticalKey &&
+      verticalKey === "products" &&
+      answersActions.setQuery("polo");
     const executeQuery = async () => {
       let searchIntents: SearchIntent[] = [];
       if (!answersActions.state.location.userLocation) {

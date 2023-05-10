@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProductsVerticalResults from "../VerticalRender/ProductsVerticalResults";
 import { ProductCard } from "./ProductCard";
@@ -40,7 +40,6 @@ const ProductsListContainer = (props: any) => {
       answersActions.executeVerticalQuery();
     }
   }, [sortType]);
-
   useEffect(() => {
     if (
       !initLoad &&
@@ -124,7 +123,7 @@ const ProductsListContainer = (props: any) => {
       setSchemaOrg({
         "@context": "https://schema.org",
         "@type": "ItemList",
-        mainEntity: currData,
+        itemListElement: currData,
       });
     }
   }, [isLoading]);
@@ -133,7 +132,6 @@ const ProductsListContainer = (props: any) => {
     <Loading />
   ) : (
     <>
-      {/* <Schema></Schema> */}
       {isGrid ? (
         <WrapperGrid>
           <div className="products-container">
