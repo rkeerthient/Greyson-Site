@@ -18,6 +18,7 @@ export const ProductsProvider = ({
   const [initLoad, setInitLoad] = useState(true);
   const [custLoad, setCustLoad] = useState(false);
   const [promoData, setPromoData] = useState();
+  const [schemaData, setSchemaData] = useState([]);
   return (
     <ProductsContext.Provider
       value={{
@@ -46,6 +47,8 @@ export const ProductsProvider = ({
         setCustLoad,
         promoData,
         setPromoData,
+        schemaData,
+        setSchemaData,
       }}
     >
       {children}

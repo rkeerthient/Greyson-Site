@@ -12,6 +12,7 @@ import {
 } from "@yext/search-headless-react";
 import { AppliedFilters } from "@yext/search-ui-react";
 import Modal from "./Modal";
+import Schema from "../Schemas/Schema";
 
 const ProductsListContainer = (props: any) => {
   const {
@@ -27,6 +28,7 @@ const ProductsListContainer = (props: any) => {
     tempPriceValues,
     setPriceValues,
     setInitLoad,
+    setSchemaData,
   } = useProductsContext();
   const answersActions = useSearchActions();
 
@@ -78,6 +80,9 @@ const ProductsListContainer = (props: any) => {
 
   const state = useSearchState((state) => state);
   const results = useSearchState((state) => state.vertical.resultsCount) || 0;
+  const resultList =
+    useSearchState((state) => state.vertical.results) || undefined;
+
   const filterState: any = state.filters ? state.filters : {};
 
   useEffect(() => {
@@ -95,10 +100,18 @@ const ProductsListContainer = (props: any) => {
     }
   }, [filterState]);
 
+  useEffect(() => {
+    console.log(JSON.stringify(resultList));
+
+    isLoading && setSchemaData([]);
+    !isLoading && setSchemaData(resultList);
+  }, [isLoading]);
+
   return isLoading && results >= 1 ? (
     <Loading />
   ) : (
     <>
+      <Schema></Schema>
       {isGrid ? (
         <WrapperGrid>
           <div className="products-container">
