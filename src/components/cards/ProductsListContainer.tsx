@@ -13,6 +13,7 @@ import {
 import { AppliedFilters } from "@yext/search-ui-react";
 import Modal from "./Modal";
 import Schema from "../Schemas/Schema";
+import { useSchemaContext } from "../../context/SchemaContext";
 
 const ProductsListContainer = (props: any) => {
   const {
@@ -31,7 +32,7 @@ const ProductsListContainer = (props: any) => {
     setSchemaData,
   } = useProductsContext();
   const answersActions = useSearchActions();
-
+  const { setSchemaOrg } = useSchemaContext();
   useEffect(() => {
     if (sortType) {
       sortType && answersActions.setSortBys([sortType]);
@@ -101,16 +102,38 @@ const ProductsListContainer = (props: any) => {
   }, [filterState]);
 
   useEffect(() => {
- 
-    isLoading && setSchemaData([]);
-    !isLoading && setSchemaData(resultList);
+    isLoading && setSchemaOrg([]);
+    if (!isLoading && resultList) {
+      let currData: any = [];
+      resultList.map((item: any) =>
+        currData.push({
+          "@type": "Product",
+          name: item.name,
+          image: item.photoGallery && item.photoGallery[0].image.url,
+          description: item.c_shortDecription,
+
+          sku: item.uid,
+          offers: {
+            "@type": "Offer",
+            url: "",
+            priceCurrency: item.price?.currencyCode,
+            price: item.price?.value,
+          },
+        })
+      );
+      setSchemaOrg({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        mainEntity: currData,
+      });
+    }
   }, [isLoading]);
 
   return isLoading && results >= 1 ? (
     <Loading />
   ) : (
     <>
-      <Schema></Schema>
+      {/* <Schema></Schema> */}
       {isGrid ? (
         <WrapperGrid>
           <div className="products-container">

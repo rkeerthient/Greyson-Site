@@ -5,11 +5,14 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { ProductsProvider } from "./context/ProductsContext";
 import "@yext/search-ui-react/bundle.css";
 import "./index.css";
+import { SchemaProvider } from "./context/SchemaContext";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
 root.render(
   <ProductsProvider>
-    <App />
+    <SchemaProvider>
+      <App />
+    </SchemaProvider>
   </ProductsProvider>
 );
