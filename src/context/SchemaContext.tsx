@@ -7,11 +7,15 @@ export const SchemaProvider = ({
   children,
 }: React.PropsWithChildren<unknown>) => {
   const [schemaOrg, setSchemaOrg] = useState();
+  const [schemaOrg1, setSchemaOrg1] = useState();
+
   return (
     <SchemaContext.Provider
       value={{
         schemaOrg,
         setSchemaOrg,
+        schemaOrg1,
+        setSchemaOrg1,
       }}
     >
       {children}

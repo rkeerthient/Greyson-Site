@@ -32,7 +32,7 @@ const ProductsListContainer = (props: any) => {
     setSchemaData,
   } = useProductsContext();
   const answersActions = useSearchActions();
-  const { setSchemaOrg } = useSchemaContext();
+  const { setSchemaOrg, schemaOrg, setSchemaOrg1 } = useSchemaContext();
   useEffect(() => {
     if (sortType) {
       sortType && answersActions.setSortBys([sortType]);
@@ -101,26 +101,34 @@ const ProductsListContainer = (props: any) => {
   }, [filterState]);
 
   useEffect(() => {
-    isLoading && setSchemaOrg([]);
+    let currData: any = [];
+
     if (!isLoading && resultList) {
-      let currData: any = [];
       resultList.map((item: any) =>
         currData.push({
           "@type": "Product",
-          name: item.name,
-          image: item.photoGallery && item.photoGallery[0].image.url,
-          description: item.c_shortDecription,
-
-          sku: item.uid,
+          name: item.rawData.name,
+          image:
+            item.rawData.photoGallery && item.rawData.photoGallery[0].image.url,
+          description: item.rawData.c_shortDecription,
+          sku: item.rawData.uid,
           offers: {
             "@type": "Offer",
             url: "",
-            priceCurrency: item.price?.currencyCode,
-            price: item.price?.value,
+            priceCurrency: item.rawData.price?.currencyCode,
+            price: item.rawData.price?.value,
           },
         })
       );
       setSchemaOrg({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "Grayson",
+        alternateName: "greysonclothiers",
+        url: "https://greysonclothiers.com/",
+        logo: "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/wolf_03.png?v=1647939709",
+      });
+      setSchemaOrg1({
         "@context": "https://schema.org",
         "@type": "ItemList",
         itemListElement: currData,

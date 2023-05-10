@@ -13,13 +13,17 @@ const searcher = provideHeadless(answersHeadlessConfig);
 searcher.setSessionTrackingEnabled(true);
 
 export default function App() {
-  const { schemaOrg } = useSchemaContext();
+  const { schemaOrg, schemaOrg1 } = useSchemaContext();
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg1) }}
       />
       <SearchHeadlessProvider searcher={searcher}>
         {/* <CartProvider> */}
