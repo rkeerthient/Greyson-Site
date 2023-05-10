@@ -123,7 +123,7 @@ const ProductsListContainer = (props: any) => {
       setSchemaOrg({
         "@context": "https://schema.org",
         "@type": "Organization",
-        name: "Grayson",
+        name: "Grayson Clothiers",
         alternateName: "greysonclothiers",
         url: "https://greysonclothiers.com/",
         logo: "https://cdn.shopify.com/s/files/1/0041/1018/8642/files/wolf_03.png?v=1647939709",
