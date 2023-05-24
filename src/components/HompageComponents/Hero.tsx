@@ -7,10 +7,9 @@ const Hero = () => {
       <article className="content">
         <h1>Ready, Set, Summer</h1>
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto, at
-          sed omnis corporis doloremque possimus velit! Repudiandae nisi odit,
-          aperiam odio ducimus, obcaecati libero et quia tempora excepturi quis
-          alias?
+          Greyson pioneers innovative products constructed with sophistication
+          and modern tailoring in mind. Built on loyalty and camaraderie, our
+          commitment to achieve greatness and grow together as a pack runs deep.
         </p>
         <Link to="/products" className="btn hero-btn">
           shop now

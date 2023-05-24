@@ -1,5 +1,6 @@
 import { useSearchActions, useSearchState } from "@yext/search-headless-react";
 import {
+  DirectAnswer,
   StandardCard,
   StandardSection,
   UniversalResults,
@@ -65,16 +66,6 @@ const Homepage = () => {
               View All
             </NavLink>
           </div>
-          {/* <div className="font-semibold px-32">{header.props.label}</div>
-
-          <NavLink
-            end
-            to={`/${header.props.label.toLowerCase()}`}
-            className="hover:underline  "
-            style={{ color: "blue" }}
-          >
-            View All
-          </NavLink> */}
           <div
             style={{
               marginTop: "2em",
@@ -88,14 +79,30 @@ const Homepage = () => {
         <hr />
       </>
     );
-    // <div>
-    //   {results.map((item: any) => (
-    //     <FAQCard result={item} />
-    //   ))}
-    // </div>
   };
+
+  const PromoSection = ({ results, CardComponent, header }: any) => {
+    console.log(JSON.stringify(results));
+    return (
+      <>
+        <div>
+          <div
+            className="font-semibold px-32 "
+            style={{ marginBottom: "2.5rem" }}
+          >
+            {header.props.label}
+          </div>
+          <img src={results[0].rawData.primaryPhoto.image.url} alt="" />
+        </div>
+      </>
+    );
+  };
+
   return (
     <main>
+      <div style={{ padding: "3em", paddingBottom: "0em" }}>
+        <DirectAnswer />
+      </div>
       {queryString ? (
         <UniversalResults
           customCssClasses={{ universalResultsContainer: "univPadding" }}
@@ -110,6 +117,11 @@ const Homepage = () => {
               CardComponent: StandardCard,
               SectionComponent: FAQSection,
               label: "FAQs",
+            },
+            promo: {
+              CardComponent: StandardCard,
+              SectionComponent: PromoSection,
+              label: "Promo",
             },
           }}
         />

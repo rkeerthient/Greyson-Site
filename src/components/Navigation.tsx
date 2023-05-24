@@ -58,14 +58,25 @@ const Navigation = ({ links }: any) => {
       );
     },
   };
+
   useEffect(() => {
     window.location.pathname
       ? setVertKey(window.location.pathname)
       : setVertKey("");
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const query = urlSearchParams.get("query");
+    query && searchActions.setQuery(query);
   }, [window.location.href]);
-
+  function removeQueryParam(paramName: any) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete(paramName);
+    window.history.replaceState(null, "", url.toString());
+  }
   const onSearch = async (searchEventData: { query?: string }) => {
     const { query } = searchEventData;
+    if (!query) {
+      removeQueryParam("query");
+    }
     if (vertKey === "/") {
       query && searchActions.setQuery(query);
       searchActions.setUniversal();
