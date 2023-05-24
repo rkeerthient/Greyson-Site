@@ -17,6 +17,7 @@ const Navigation = ({ links }: any) => {
   const { setCustLoad, setPromoData } = useProductsContext();
   const [vertKey, setVertKey] = useState("");
   const searchActions = useSearchActions();
+
   const visualAutocompleteConfig: VisualAutocompleteConfig = {
     entityPreviewSearcher: provideHeadless({
       ...answersHeadlessConfig,
@@ -66,7 +67,9 @@ const Navigation = ({ links }: any) => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const query = urlSearchParams.get("query");
     query && searchActions.setQuery(query);
+    console.log(vertKey);
   }, [window.location.href]);
+
   function removeQueryParam(paramName: any) {
     const url = new URL(window.location.href);
     url.searchParams.delete(paramName);
@@ -80,7 +83,7 @@ const Navigation = ({ links }: any) => {
     if (vertKey === "/") {
       query && searchActions.setQuery(query);
       searchActions.setUniversal();
-      searchActions.executeUniversalQuery().then((res) => console.log(res));
+      searchActions.executeUniversalQuery();
     } else if (query?.length) {
       setCustLoad(true);
       searchActions.setQuery(query);
@@ -137,7 +140,7 @@ const Navigation = ({ links }: any) => {
             <FaBars />
           </button>
         </div>
-        {vertKey !== "/products" ? (
+        {vertKey && vertKey !== "/products" && vertKey !== "/" ? (
           <SearchBar
             placeholder="search"
             customCssClasses={{
