@@ -336,3 +336,16 @@ h4 {
 .univPadding {
   padding: 4em;
 }
+.chat-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+.chat-button.hidden {
+  opacity: 0;
+  pointer-events: none;
+}

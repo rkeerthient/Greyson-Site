@@ -1,28 +1,31 @@
 import styled from "styled-components";
+import { ChatBot } from "../Chatbot";
 const Contact = () => {
   return (
-    <Wrapper>
-      <div className="section-center">
-        <h3>Join our newsletter and get 20% off</h3>
-        <div className="content">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
-            sint unde quaerat ratione soluta veniam provident adipisci cumque
-            eveniet tempore?
-          </p>
-          <form className="contact-form">
-            <input
-              type="email"
-              className="form-input"
-              placeholder="enter email"
-            />
-            <button type="submit" className="submit-btn">
-              subscribe
-            </button>
-          </form>
+    <>
+      <Wrapper>
+        <div className="section-center">
+          <h3>Join our newsletter and get 20% off</h3>
+          <div className="content">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
+              sint unde quaerat ratione soluta veniam provident adipisci cumque
+              eveniet tempore?
+            </p>
+            <form className="contact-form">
+              <input
+                type="email"
+                className="form-input"
+                placeholder="enter email"
+              />
+              <button type="submit" className="submit-btn">
+                subscribe
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </>
   );
 };
 const Wrapper = styled.section`

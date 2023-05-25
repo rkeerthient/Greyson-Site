@@ -67,8 +67,7 @@ const Navigation = ({ links }: any) => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const query = urlSearchParams.get("query");
     query && searchActions.setQuery(query);
-    console.log(vertKey);
-  }, [window.location.href]);
+   }, [window.location.href]);
 
   function removeQueryParam(paramName: any) {
     const url = new URL(window.location.href);

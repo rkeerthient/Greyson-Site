@@ -83,7 +83,6 @@ const Homepage = () => {
   };
 
   const PromoSection = ({ results, CardComponent, header }: any) => {
-    console.log(JSON.stringify(results));
     return (
       <>
         <div>

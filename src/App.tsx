@@ -9,6 +9,7 @@ import { CartProvider } from "./context/CartContext";
 import { PageViewContextProvider } from "./context/PageViewContext";
 import { routeConfig } from "./config/routeConfig";
 import { useSchemaContext } from "./context/SchemaContext";
+import { ChatBot } from "./components/Chatbot";
 const searcher = provideHeadless(answersHeadlessConfig);
 searcher.setSessionTrackingEnabled(true);
 
@@ -30,6 +31,7 @@ export default function App() {
         <PageViewContextProvider>
           <PageRouter Layout={StandardLayout} routes={routeConfig} />
         </PageViewContextProvider>
+        <ChatBot configId="Greyson" />
         {/* </CartProvider> */}
       </SearchHeadlessProvider>
     </>
