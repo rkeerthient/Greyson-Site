@@ -19,6 +19,7 @@ const Homepage = () => {
   const isLoading =
     useSearchState((state) => state.searchStatus.isLoading) || false;
   const queryString = useSearchState((state) => state.query.input);
+
   const GridSection = ({ results, CardComponent, header }: any) => {
     return (
       <>
@@ -38,7 +39,7 @@ const Homepage = () => {
             style={{
               marginTop: "2em",
               display: "grid",
-              gridTemplateColumns: "auto auto auto auto",
+              gridTemplateColumns: "25% 25% 25% 25%",
               gap: "2em",
             }}
           >
