@@ -1,8 +1,7 @@
 import { HeadlessConfig } from "@yext/search-headless-react";
 
 export const answersHeadlessConfig: HeadlessConfig = {
-  apiKey: process.env.API_KEY ?? "",
-  experienceKey: process.env.EXPERIENCE_KEY ?? "",
+  apiKey: "1014d67d8b675d4954594da359ceae9b",
+  experienceKey: "answers",
   locale: "en",
-  // endpoints: SandboxEndpoints,
 };
