@@ -138,7 +138,7 @@ const SingleProductPage = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://streams.yext.com/v2/accounts/me/api/allProducts?api_key=${proxess.env.REACT_APP_CONTENTAPI_KEY!}&v=20220101&id=${id}`
+        `https://streams.yext.com/v2/accounts/me/api/allProducts?api_key=${process.env.REACT_APP_CONTENTAPI_KEY!}&v=20220101&id=${id}`
       );
       const responseJson = await response.json();
       setData(await responseJson.response.docs[0]);

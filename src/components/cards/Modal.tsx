@@ -17,7 +17,7 @@ const Modal = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://liveapi.yext.com/v2/accounts/3147081/entities/${prodId}?api_key=${proxess.env.REACT_APP_CONTENTAPI_KEY!}&v=20220101`
+        `https://liveapi.yext.com/v2/accounts/3147081/entities/${prodId}?api_key=${process.env.REACT_APP_CONTENTAPI_KEY!}&v=20220101`
       );
       const responseJson: any = await response.json();
       setData(await responseJson.response);
