@@ -7,8 +7,7 @@ import { GoLocation } from "react-icons/go";
 import { TiDirections } from "react-icons/ti";
 import { RiMapPin5Line } from "react-icons/ri";
 import { FiPhoneCall } from "react-icons/fi";
-const TOKEN =
-  "pk.eyJ1Ijoic3VubnlrZWVydGhpIiwiYSI6ImNsNWh5ZGt3czAyejUzY3A3Y3pvZ2E0bTgifQ.TNHfh1HL0LwTzLxs2TOaBQ";
+const TOKEN = "token";
 
 export interface MapData {
   city?: string;
