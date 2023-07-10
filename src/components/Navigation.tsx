@@ -70,6 +70,8 @@ const Navigation = ({ links }: any) => {
       : setVertKey("");
     const urlSearchParams = new URLSearchParams(window.location.search);
     const query = urlSearchParams.get("query");
+    const context = urlSearchParams.get("context");
+    context && searchActions.setContext(userData);
     query && searchActions.setQuery(query);
   }, [window.location.href]);
 
@@ -82,7 +84,6 @@ const Navigation = ({ links }: any) => {
     const { query } = searchEventData;
     const urlSearchParams = new URLSearchParams(window.location.search);
     const context = urlSearchParams.get("context");
-    console.log(context);
     context && searchActions.setContext(userData);
     if (!query) {
       removeQueryParam("query");
