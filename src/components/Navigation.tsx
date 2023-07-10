@@ -60,6 +60,10 @@ const Navigation = ({ links }: any) => {
     },
   };
 
+  const userData = {
+    type: "new",
+    gender: "male",
+  };
   useEffect(() => {
     window.location.pathname
       ? setVertKey(window.location.pathname)
@@ -67,7 +71,7 @@ const Navigation = ({ links }: any) => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const query = urlSearchParams.get("query");
     query && searchActions.setQuery(query);
-   }, [window.location.href]);
+  }, [window.location.href]);
 
   function removeQueryParam(paramName: any) {
     const url = new URL(window.location.href);
@@ -76,6 +80,10 @@ const Navigation = ({ links }: any) => {
   }
   const onSearch = async (searchEventData: { query?: string }) => {
     const { query } = searchEventData;
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const context = urlSearchParams.get("context");
+    console.log(context);
+    context && searchActions.setContext(userData);
     if (!query) {
       removeQueryParam("query");
     }
